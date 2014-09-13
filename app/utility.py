@@ -2,7 +2,8 @@ import os
 import zipfile
 import tarfile
 import tarfile
-import sendgrid
+import sendgrid-python
+
 '''
 def zip(src, dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
@@ -33,7 +34,7 @@ def sendemail(efrom, eto, esubject,ebody):
     sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
 
     message = sendgrid.Mail()
-    message.add_to('G Doe <gochoa1@binghamton.edu>')
+    message.add_to('G Doe <aplotko1@binghamton.edu>')
     message.set_subject('Example')
     message.set_html('Body')
     message.set_text('Body')
