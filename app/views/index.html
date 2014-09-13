@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="static/assets/css/main.css" rel="stylesheet">
+    <link href="http://yui.yahooapis.com/combo?pure/0.5.0/base-min.css&pure/0.5.0/forms-min.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -70,9 +71,43 @@
 	</div><!-- headerwrap -->
 
 
-	<div id="form" name="form" class="container w">
+	<div id="form" name="form" class="container w" autocomplete="off">
 		<div class="row centered">
-			<h1>FORM GOES HERE</h1>
+			<h1 id="greeting">Welcome!</h1>
+			<form class="pure-form pure-form-aligned" action="/">
+			    <fieldset>
+			        <div class="pure-control-group">
+			            <label for="full-name">Your Full Name</label>
+			            <input id="full-name" type="text" placeholder="Your Full Name" required="true" autocomplete="off">
+			        </div>
+
+			        <div class="pure-control-group">
+			            <div id="email-alert">Please type in a valid email address.</div><br />
+			            <label for="email">Your Email Address</label>
+			            <input id="email" type="email" placeholder="Your Email Address" required="true" autocomplete="off">
+			        </div>
+
+			        <div class="pure-control-group">
+			            <label for="organization-name">Organization Name</label>
+			            <input id="organization-name" type="text" placeholder="Organization Name" required="true" autocomplete="off">
+			        </div>
+
+			   		<div class="pure-control-group">
+			            <label for="school-name">HS/University Name</label>
+			            <input id="school-name" type="text" placeholder="HS/University Name" required="true" autocomplete="off">
+			        </div>
+
+			        <div class="pure-control-group">
+			            <div id="description-alert">Briefly summarize what your organization is about.</div><br />
+			            <label for="description">Organization Description</label>
+			            <textarea id="description" placeholder="Description" required="true"></textarea>
+			        </div>
+
+			        <div class="pure-controls">
+			            <button id="submit-button" type="submit" class="pure-button pure-button-primary" disabled="true">Create Organization</button>
+			        </div>
+			    </fieldset>
+			</form>
 		</div><!-- row -->
 		<br>
 		<br>
@@ -108,7 +143,7 @@
 	<div id="f">
 		<div class="container">
 			<div class="row centered">
-				<p style="color: #fff;">&copy; 2014 Gabriel Ochoa, Alan Plotko</p>
+				<p style="color: #fff;">© 2014 Gabriel Ochoa, Alan Plotko. <br> Made with ♥ at <a href="http://2014f.pennapps.com/">PennAppsX</a></p>
 				<!--<a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-dribbble"></i></a>-->
 			</div><!-- row -->
 		</div><!-- container -->
@@ -156,6 +191,78 @@
 	    }
 	  });
 	});
+
+	$('#full-name').on('input', function() {
+	  	if($('#full-name').val().length > ($('#full-name').val().split(" ")[0].length + 1) && $('#full-name').val().split(" ").length == 2) {
+	    	$('#greeting').text('Hi there, ' + $('#full-name').val().split(" ")[0] + '!');
+		}
+		else {
+	    	$('#greeting').text('Welcome!');
+		}
+	});
+
+	$('#email').on('input', function() {
+	  	if(isValidEmailAddress($('#email').val())) {
+	    	$('#email-alert').text('Your username will be ' + $('#email').val().split("@")[0] + '.').css('color', 'green');
+		}
+		else {
+	    	$('#email-alert').text('Please type in a valid email address.').css('color', 'red');
+		}
+	});
+
+	$('#organization-name').on('input', function() {
+	  	if($('#description').val().length >= 0 && $('#description').val().length < 50) {
+	    	$('#submit-button').text('Let\'s get started with ' + $('#organization-name').val() + '!');
+	    	if($('#organization-name').val().length < 30) {
+				$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
+			}
+			else {
+				$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
+			}
+		}
+	});
+
+	$('#description').on('input', function() {
+	  	if($('#description').val().length > 50 && $('#description').val().length < 500) {
+	    	$('#description-alert').text("Awesome!").css('color', 'green');
+		}
+		else {
+			if($('#organization-name').val().length < 30) {
+				$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
+			}
+			else {
+				$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
+			}
+		}
+	});
+
+	$(document).ready(function (){
+	    validate();
+	    $('#full-name, #email, #organization-name, #school-name, #description').change(validate);
+	});
+
+	function validate(){
+	    if ($('#full-name').val().length   			>   0   	&& 
+	    	$('#full-name').val().length   			<   50  	&&
+	        isValidEmailAddress($('#email').val()) 				&&
+	        $('#organization-name').val().length    >   0		&&
+	        $('#organization-name').val().length    <   100		&&
+	        $('#school-name').val().length    		>   0		&&
+	        $('#school-name').val().length    		<   100		&&
+	        $('#description').val().length    		>   50		&&
+	        $('#description').val().length    		<   500			) {
+	        
+	        $("#submit-button").prop("disabled", false);
+	    }
+	    else {
+	        $("#submit-button").prop("disabled", true);
+	    }
+	}
+
+	function isValidEmailAddress(emailAddress) {
+    	var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    	return pattern.test(emailAddress);
+	};
 	</script>
   </body>
 </html>

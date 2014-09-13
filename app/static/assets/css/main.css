@@ -409,4 +409,12 @@ a:after {
     background: #ff7878;
 }
 
-
+/* Home - Form */
+#email-alert, #description-alert {
+    font-size: 12px;
+    font-weight: normal;
+    font-style: italic;
+    color: red;
+    margin: 5px 0 -15px 0;
+    text-align: center;
+}
