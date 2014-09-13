@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Campus QuickStart lets students get their club or organization started with a website and social media.">
     <meta name="author" content="Gabriel Ochoa, Alan Plotko">
-    <link rel="shortcut icon" href="static/assets/ico/favicon.png">
+    <link rel="shortcut icon" href="/static/assets/ico/favicon.png">
 
-    <title>CQS Control Panel</title>
+    <title>Manage {{ user['_o-name'] }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/assets/css/bootstrap.css" rel="stylesheet">
-    <link href="static/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/assets/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/assets/css/main.css" rel="stylesheet">
+    <link href="/static/assets/css/main.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -51,22 +51,26 @@
     <div id="blue">
         <div class="container">
             <div class="row centered">
-                <div class="col-lg-8 col-lg-offset-2">
-                <h1 style="color: #fff; font-weight: bold; text-decoration: underline;">Your Clubs & Organizations</h1>
-                <ul id="clubOrg_list">
-                    <li><a href="/manage/1">Manage {{ school }}'s {{ o_name }}</a></li>
-                </ul>
+                <div class="col-lg-10 col-lg-offset-1">
+                <h2 style="color: #fff; font-weight: bold; margin: 0; padding: 0;">{{ user['_o-name'] }}</h2>
                 </div>
             </div><!-- row -->
         </div><!-- container -->
     </div><!--  bluewrap -->
-    
-    <div id="r">
+
+    <div id="signup" name="signup" class="container w" autocomplete="off">
+        <div class="row centered">
+        </div><!-- row -->
+        <br>
+        <br>
+    </div><!-- container -->
+
+    <div id="r" style="margin: 0;">
         <div class="container">
             <div class="row centered">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h4>THIS IS YOUR CONTROL PANEL</h4>
-                    <p>Everything you need to build your club's or organization's online presence is right at your fingertips. Just choose a club or organization to manage from the list above and you'll be on your way to getting the hard stuff out of the way.</p>
+                    <h4>STEP 1: Verify {{ user['_o-name'] }}'s information!</h4>
+                    <p>If you have anything you'd like to fix since your registration, here's your chance to do so.</p>
                 </div>
             </div><!-- row -->
         </div><!-- container -->
@@ -88,6 +92,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
   </body>
 </html>

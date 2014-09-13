@@ -495,3 +495,40 @@ a:after {
 #form input[type=submit] {
     font-weight: bold;
 }
+
+#login-nav {
+    margin-right: 20px;
+}
+
+#clubOrg_list {
+    margin: 50px;
+}
+
+#clubOrg_list li {
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    padding: 15px;
+    border: 2px dotted #fff;
+    border-radius: 5px;
+}
+
+#clubOrg_list a {
+    color: #fff;
+}
+
+#clubOrg_list a:hover {
+    color: #ddd;
+}
+
+#r {
+    margin: 0;
+    padding: 15px 0 0 0;
+}
+
+#r p {
+    margin: 0;
+    padding-bottom: 15px;
+}

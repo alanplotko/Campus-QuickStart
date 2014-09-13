@@ -1,8 +1,8 @@
 import os
 import bottle
-from bottle import request, route, template
 import mongodbconnect
 from utility import sendemail
+import uuid
 
 PROJECT_DIR = os.path.dirname(__file__)
 bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
@@ -42,37 +42,71 @@ def user_find(email):
     return None
   return mongo_db.users.find_one({ '_id': email})
 
+def user_auth(user, pw):
+  if not user: return False
+  return user['_pass'] == pw
+
+def get_session():
+  session = bottle.request.get_cookie('session', secret='secret')
+  return session
+
+def save_session(uid):
+  session = {}
+  session['uid'] = uid
+  session['sid'] = uuid.uuid4().hex
+  bottle.response.set_cookie('session', session, secret='secret')
+  return session
+
+def invalidate_session():
+  bottle.response.delete_cookie('session', secret='secret')
+  return
+
 @bottle.route('/')
 def index():
-  return bottle.template('index')
+  session = get_session()
+  if not session:
+    return bottle.template('index')
+  luser = user_find(session['uid'])
+  if not luser: bottle.redirect('/logout')
+  bottle.redirect('/dashboard')
 
 @bottle.route('/about')
 def about():
   return bottle.template('about')
 
 @bottle.route('/login', method="POST")
-def submitlogin(): 
-  data = bottle.request.forms
-  if data.get('email'):
-    # check for pre existance
-    tuser = mongo_db.users.find({data.get('email')}, {data.get('password')})
-    if tuser:
-      #then we have a match
-      response.set_cookie("account", data.get('email'), secret='some-secret-key')
-      return bottle.template('welcome', result='Logged In Succesfully!')
+def submitlogin():
+  if 'email' in bottle.request.POST and 'password' in bottle.request.POST:
+    email = bottle.request.POST['email']
+    password = bottle.request.POST['password']
+    user = user_find(email)
+    if user_auth(user, password):
+      save_session(user['_id'])
+      bottle.redirect('/dashboard')
     else:
-      return bottle.template('login', result='Incorrect Information.')
+      return bottle.template(bottle.request.POST['page'], error='Incorrect Information.')
 
 @bottle.route('/login')
 def login():
-  return bottle.template('login')
+  return bottle.template('index')
 
-@bottle.route('/welcome')
-def login():
-  username = request.get_cookie("account", secret='some-secret-key')
-  if not username :
-    return bottle.template('login', result='Incorrect Information.')
-  return bottle.template('welcome')
+@bottle.route('/dashboard')
+def dashboard():
+  session = get_session()
+  if not session: bottle.redirect('/login')
+  luser = user_find(session['uid'])
+  if not luser: bottle.redirect('/logout')
+  return bottle.template('welcome', username=luser['_id'].split("@")[0], o_name=luser['_o-name'], school=luser['_school'])
+
+@bottle.route('/manage/<step>')
+def manage(step):
+  step = int(step)
+  session = get_session()
+  if not session: bottle.redirect('/login')
+  luser = user_find(session['uid'])
+  if not luser: bottle.redirect('/logout')
+  if step == 1:
+    return bottle.template('manage', username=luser['_id'].split("@")[0], user=dict(luser))
 
 @bottle.route('/account')
 def account():
@@ -82,11 +116,16 @@ def account():
   else:
     loggeduser1 = loggeduser[0]
     lemail = loggeduser1['_id']
-   # lname = loggeduser1['_fullname']
-   #lpass = loggeduser1['_pass']
-   # lschool = loggeduser1['_school']
-   # ldesc = loggeduser1['_desc']
     return bottle.template('account')
+
+@bottle.route('/logout')
+def logout():
+  session = get_session()
+  if not session:
+    return bottle.template('index', logged_out='See you later!')
+  else:
+    invalidate_session()
+    bottle.redirect('/logout')
 
 @bottle.route('/static/assets/<filename:path>', name='static')
 def static_file(filename):
