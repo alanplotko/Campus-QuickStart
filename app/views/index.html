@@ -55,9 +55,6 @@
 			<div class="row centered">
 				<div class="col-lg-12">
 				<h1>Campus QuickStart</h1>
-				% if defined('status_code'):
-				Status Code: {{ status_code }}
-				% end
 				% if defined('register_success') and "True" in register_success and defined('first_name'):
         		<h1 style="font-size: 36px; margin: 40px 0 0 0;">Log in with your credentials to begin!</h1><br />
         		<h2 style="font-size:48px;">Thanks for signing up, {{ first_name }}!</h2><br />
