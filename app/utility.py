@@ -30,10 +30,14 @@ def tar(src, dst):
     tar.close()
     return
 '''
-def sendemail(efrom, eto, esubject,ebody):
+def sendemail(email_to, full_name):
     sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
-    message = sendgrid.Mail(to=eto, subject=esubject, html=ebody, text=ebody, from_email=efrom)
-    
+    message = sendgrid.Mail()
+    message.add_to(full_name + " <" + email_to + ">")
+    message.set_subject("Welcome to Campus QuickStart!")
+    message.set_html("You now have access to Campus QuickStart, where you can set up your website and social media platforms. Log in with your credentials to see it in action now!")
+    message.set_text("You now have access to Campus QuickStart, where you can set up your website and social media platforms. Log in with your credentials to see it in action now!")
+    message.set_from('Alan Plotko <aplotko1@binghamton.edu>')
     status, msg = sg.send(message)
 
     return status
