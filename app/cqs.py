@@ -150,36 +150,20 @@ def manage(step):
       description = "  is now hosted with us!"
     elif(hosting_option == "2"):
       description = " has been exported!"
-    report = setUpHosting(dict(luser), step_int, description)
-
-@bottle.route('/sendcontactform')
-def sendContactForm():
-  if 'sender' in bottle.request.POST:
-    sender = bottle.request.POST['sender']
-  if 'sender_email' in bottle.request.POST:
-    sender_email = bottle.request.POST['sender_email']
-  if 'receiver' in bottle.request.POST:
-    receiver = bottle.request.POST['receiver']
-  if 'receiver_email' in bottle.request.POST:
-    receiver_email = bottle.request.POST['receiver_email']
-  if 'phone' in bottle.request.POST:
-    phone = bottle.request.POST['phone']
-  if 'message' in bottle.request.POST:
-    message = bottle.request.POST['message']
-  utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
-
-def setUpHosting(user, step_int, description):
+  
+  # Report
   report = 'Log:\n\n'
-  school = (user['_school'].replace(" ", "-")).lower()
-  organization = (user['_o-name'].replace(" ", "-")).lower()
-  # Crate folder for university if it does not exist
+  school = luser['_school-lower']
+  organization = luser['_o-name-lower']
+
+  # Create folder for university if it does not exist
   if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school):
     os.makedirs(PROJECT_DIR + '/views/organizations/' + school)
-  # Crate folder for club or organization if it does not exist
+  # Create folder for club or organization if it does not exist
   if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school + '/' + organization):
     os.makedirs(PROJECT_DIR + '/views/organizations/' + school + '/' + organization)
   
-  sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(user['_theme'])
+  sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(luser['_theme'])
   destPath = r'' + PROJECT_DIR + '/views/organizations/' + school + '/' + organization
   for root, dirs, files in os.walk(sourcePath):
     #figure out where we're going
@@ -204,13 +188,29 @@ def setUpHosting(user, step_int, description):
                 report += ('File ' + f + ' copied.')
             except IOError:
                 report += ('file "' + f + '" already exists')
-  
   return bottle.template('manage',
-      user=dict(user),
+      user=dict(luser),
       step=step_int,
-      title="Your website " + description,
+      title="Your website " + description + " You can view your website here: ",
+      link = "http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization,
       desc="You can return to your dashboard and restart the process to make changes.",
       report=report)
+
+@bottle.route('/sendcontactform')
+def sendContactForm():
+  if 'sender' in bottle.request.POST:
+    sender = bottle.request.POST['sender']
+  if 'sender_email' in bottle.request.POST:
+    sender_email = bottle.request.POST['sender_email']
+  if 'receiver' in bottle.request.POST:
+    receiver = bottle.request.POST['receiver']
+  if 'receiver_email' in bottle.request.POST:
+    receiver_email = bottle.request.POST['receiver_email']
+  if 'phone' in bottle.request.POST:
+    phone = bottle.request.POST['phone']
+  if 'message' in bottle.request.POST:
+    message = bottle.request.POST['message']
+  utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
 
 @bottle.route('/manage/step/<step>', method="POST")
 def manage_update(step):
@@ -223,7 +223,9 @@ def manage_update(step):
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
       '_o-name': bottle.request.POST['organization-name'],
       '_school': bottle.request.POST['school-name'],
-      '_desc': bottle.request.POST['description']
+      '_desc': bottle.request.POST['description'],
+      '_o-name-lower': (bottle.request.POST['organization-name'].replace(" ", "-")).lower(),
+      '_school-lower': (bottle.request.POST['school-name'].replace(" ", "-")).lower(),
     }})
   elif step == 2:
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
