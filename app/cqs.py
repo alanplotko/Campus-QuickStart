@@ -34,7 +34,7 @@ def index():
 @bottle.route('/about')
 def about():
   return bottle.template('about')
-
+'''
 @bottle.route('/login')
 def login(): 
   data = bottle.request.forms
@@ -45,7 +45,7 @@ def login():
       return bottle.template('welcome', result='Logged In Succesfully!')
     else:
       return bottle.template('login', result='Incorrect Information.')
-
+'''
 @bottle.route('/login')
 def login():
   return bottle.template('login')
