@@ -495,3 +495,7 @@ a:after {
 #form input[type=submit] {
     font-weight: bold;
 }
+
+#title {
+    margin-top: 20px;
+}
