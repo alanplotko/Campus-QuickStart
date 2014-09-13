@@ -23,7 +23,7 @@ def submit_form():
 
       if status < 200 or status >= 300:
         return bottle.template('index', result='There was an error trying to send an email to ' + data.get('email') +
-          '. Please wait a few minutes before trying to register again.')        
+          '. Please wait a few minutes before trying to register again.', status_code=status)        
       else:
         nuser = {
           '_id': data.get('email'),
