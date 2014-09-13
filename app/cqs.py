@@ -1,8 +1,11 @@
 import os
 import bottle
 import mongodbconnect
-from utility import sendemail
+from utility import sendemail, sendemailcontactform
 import uuid
+import shutil
+import re
+import hashlib
 
 PROJECT_DIR = os.path.dirname(__file__)
 bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
@@ -17,18 +20,22 @@ def submit_form():
     if tuser:
       return bottle.template('index', result='You are already registered!')
     else:
-      nuser = {
-        '_id': data.get('email'),
-        '_pass': data.get('password'),
-        '_fullname': data.get('full-name'),
-        '_o-name': data.get('organization-name'),
-        '_school': data.get('school-name'),
-        '_desc': data.get('description')
-      }
-      userid = mongo_db.users.insert(nuser)
-      sendemail("from", "to", "subject", "body")
-      return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
-        first_name=str(data.get('full-name').split(" ")[0]), register_success='True')
+      status = sendemail(data.get('email'), data.get('full-name'))
+      if status < 200 or status >= 300:
+        return bottle.template('index', result='There was an issue with your email address - please try registering again in a few minutes.', 
+          first_name=str(data.get('full-name').split(" ")[0]))
+      else:      
+        nuser = {
+          '_id': data.get('email'),
+          '_pass': data.get('password'),
+          '_fullname': data.get('full-name'),
+          '_o-name': data.get('organization-name'),
+          '_school': data.get('school-name'),
+          '_desc': data.get('description')
+        }
+        userid = mongo_db.users.insert(nuser)
+        return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
+          first_name=str(data.get('full-name').split(" ")[0]), register_success='True')
   else:
     return bottle.template('index', result=None)
 
@@ -93,33 +100,113 @@ def dashboard():
   if not luser: bottle.redirect('/logout')
   return bottle.template('welcome', username=luser['_id'].split("@")[0], o_name=luser['_o-name'], school=luser['_school'])
 
-@bottle.route('/manage/<step>')
+@bottle.route('/manage/step/<step>')
 def manage(step):
-  step = int(step)
+  step_int = int(float(step))
   session = get_session()
   if not session: bottle.redirect('/login')
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
-  if step == 1:
+  if step_int == 1:
     return bottle.template('manage',
       user=dict(luser),
-      step=step,
+      step=step_int,
       title="Verify " + luser['_o-name'] + "'s information!",
       desc="If you have anything you'd like to fix since your registration, here's your chance to do so.")
-  elif step == 2:
+  elif step_int == 2:
     return bottle.template('manage',
       user=dict(luser),
-      step=step,
+      step=step_int,
       title="Draft a constitution!",
       desc="Every club or organization has a basic set of goals. Can you clarify yours?")
-  elif step == 3:
+  elif step_int == 3:
     return bottle.template('manage',
       user=dict(luser),
-      step=step,
+      step=step_int,
       title="Create a website!",
       desc="Get your club and organization on the web for all to see!")
+  elif step_int == 4:
+    mongo_db.users.update({'_id': luser['_id']}, { '$set': {
+      '_theme': str(step).split(".")[1]
+    }})
+    return bottle.template('manage',
+      user=dict(luser),
+      step=step_int,
+      title="How do you want to host your website?",
+      desc="Host it with us or export it to host somewhere else. GitHub Pages support coming soon!")
+  elif step_int == 5:
+    hosting_string = str(step)
+    hosting_option = hosting_string.split(".")[1]
+    mongo_db.users.update({'_id': luser['_id']}, { '$set': {
+      '_hosting': hosting_option
+    }})
+    if(hosting_option == "1"):
+      description = "  is now hosted with us!"
+    elif(hosting_option == "2"):
+      description = " has been exported!"
+    report = setUpHosting(dict(luser), step_int, description)
 
-@bottle.route('/manage/<step>', method="POST")
+@bottle.route('/sendcontactform')
+def sendContactForm():
+  if 'sender' in bottle.request.POST:
+    sender = bottle.request.POST['sender']
+  if 'sender_email' in bottle.request.POST:
+    sender_email = bottle.request.POST['sender_email']
+  if 'receiver' in bottle.request.POST:
+    receiver = bottle.request.POST['receiver']
+  if 'receiver_email' in bottle.request.POST:
+    receiver_email = bottle.request.POST['receiver_email']
+  if 'phone' in bottle.request.POST:
+    phone = bottle.request.POST['phone']
+  if 'message' in bottle.request.POST:
+    message = bottle.request.POST['message']
+  sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
+
+def setUpHosting(user, step_int, description):
+  report = 'Log:\n\n'
+  school = (user['_school'].replace(" ", "-")).lower()
+  organization = (user['_o-name'].replace(" ", "-")).lower()
+  # Crate folder for university if it does not exist
+  if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school):
+    os.makedirs(PROJECT_DIR + '/views/organizations/' + school)
+  # Crate folder for club or organization if it does not exist
+  if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school + '/' + organization):
+    os.makedirs(PROJECT_DIR + '/views/organizations/' + school + '/' + organization)
+  
+  sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(user['_theme'])
+  destPath = r'' + PROJECT_DIR + '/views/organizations/' + school + '/' + organization
+  for root, dirs, files in os.walk(sourcePath):
+    #figure out where we're going
+    dest = destPath + root.replace(sourcePath, '')
+    
+    #if we're in a directory that doesn't exist in the destination folder
+    #then create a new folder
+    if not os.path.isdir(dest):
+        os.mkdir(dest)
+        report += ('Directory created at: ' + dest + '\n')
+
+    #loop through all files in the directory
+    for f in files:
+
+        #compute current (old) & new file locations
+        oldLoc = root + '\\' + f
+        newLoc = dest + '\\' + f
+
+        if not os.path.isfile(newLoc):
+            try:
+                shutil.copy2(oldLoc, newLoc)
+                report += ('File ' + f + ' copied.')
+            except IOError:
+                report += ('file "' + f + '" already exists')
+  
+  return bottle.template('manage',
+      user=dict(user),
+      step=step_int,
+      title="Your website " + description,
+      desc="You can return to your dashboard and restart the process to make changes.",
+      report=report)
+
+@bottle.route('/manage/step/<step>', method="POST")
 def manage_update(step):
   step = int(step)
   session = get_session()
@@ -131,12 +218,26 @@ def manage_update(step):
       '_o-name': bottle.request.POST['organization-name'],
       '_school': bottle.request.POST['school-name'],
       '_desc': bottle.request.POST['description']
-    }});
+    }})
   elif step == 2:
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
       '_const': bottle.request.POST['constitution']
-    }});
+    }})
   return bottle.redirect(str(step + 1))
+
+
+@bottle.route('/organizations/<school>/<organization>')
+def show_site(school, organization):
+    user = mongo_db.users.find_one({
+      '_school': re.compile(school.replace("-", " "), re.IGNORECASE),
+      '_o-name': re.compile(organization.replace("-", " "), re.IGNORECASE)
+    })
+    return bottle.template('organizations/' + school + '/' + organization + '/index',
+      title=user['_o-name'], description=user['_desc'], full_name=user['_fullname'], 
+      constitution=user['_const'], gravatar=makeGravatar(user['_id']), email=user['_id'])
+
+def makeGravatar(email):
+  return "http://www.gravatar.com/avatar/" + hashlib.md5(email.encode('utf-8')).hexdigest() + "?s=150"
 
 @bottle.route('/account')
 def account():

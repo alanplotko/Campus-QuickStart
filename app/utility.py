@@ -44,6 +44,18 @@ def sendemail(email_to, full_name):
     status, msg = sg.send(message)
 
     return status
+
+def sendemail2(receiver_email, sender_email, receiver, sender, phone, message):
+    sg = sendgrid.SendGridClient(os.environ.get('SENDGRID_USERNAME'), os.environ.get('SENDGRID_PASSWORD'))
+    message = sendgrid.Mail()
+    message.add_to(receiver + " <" + receiver_email + ">")
+    message.set_subject("Contact Form Submission from " + sender)
+    message.set_html(sender + " has contacted you via Campus QuickStart with the following message and can be reached by replying to this email or at " + phone + ".<br /><br />Message:<br />" + message)
+    message.set_text(sender + " has contacted you via Campus QuickStart with the following message and can be reached by replying to this email or at " + phone + ". Message:" + message)
+    message.set_from(sender + ' <' + sender_email + '>')
+    status, msg = sg.send(message)
+
+    return status    
 '''
 def postfacebook(pageid, posttext):
     graphu = facebook.GraphAPI(CAAHnCTQz3dgBACgduWVLApGmNZBPlaFRCBtZBasHnAOmpr7Kpy3NS9irYZAsBcxsEa7XNTZAfZANorxO5txoEgdOtT9mAs4bZAmlTMVU1vzFJY9ubNzP6D0T8pz3pPACIZCkTLgVQji7e8AVD5JmRSUhwP1NpxYuij89zXnWgApqSJsMKMCjwK2HxKJ3eULHPvFC3ayuQWEvM5kuzCREtXPMT0VhWldyUkZD)
