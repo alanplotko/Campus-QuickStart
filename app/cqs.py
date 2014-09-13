@@ -1,5 +1,6 @@
 import os
 import bottle
+from bottle import request, route, template
 import mongodbconnect
 
 PROJECT_DIR = os.path.dirname(__file__)
@@ -17,7 +18,11 @@ def submit_form():
     else:
       nuser = {
         '_id': data.get('email'),
-        '_pass': data.get('password')
+        '_pass': data.get('password'),
+        '_fullname': data.get('full-name'),
+        '_o-name': data.get('organization-name'),
+        '_school': data.get('school-name'),
+        '_desc': data.get('description')
       }
       userid = mongo_db.users.insert(nuser)
       return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
@@ -46,6 +51,7 @@ def submitlogin():
     tuser = mongo_db.users.find({data.get('email')}, {data.get('password')})
     if tuser:
       #then we have a match
+      response.set_cookie("account", data.get('email'), secret='some-secret-key')
       return bottle.template('welcome', result='Logged In Succesfully!')
     else:
       return bottle.template('login', result='Incorrect Information.')
@@ -53,6 +59,13 @@ def submitlogin():
 @bottle.route('/login')
 def login():
   return bottle.template('login')
+
+@bottle.route('/welcome')
+def login():
+  username = request.get_cookie("account", secret='some-secret-key')
+  if not username :
+    return bottle.template('login', result='Incorrect Information.')
+  return bottle.template('welcome')
 
 @bottle.route('/static/assets/<filename:path>', name='static')
 def static_file(filename):

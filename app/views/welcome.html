@@ -47,9 +47,11 @@
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
+                            % if defined('username'):
                             <li class="active">
-                                <a href="#">Welcome to Campus QuickStart, {{ email }}!</a>
+                                <a href="#">Welcome to Campus QuickStart, {{ username }}!</a>
                             </li>
+                             % end
                         </ul>
                     </div>
                 </div>
