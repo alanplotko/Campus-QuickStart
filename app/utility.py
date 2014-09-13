@@ -2,7 +2,7 @@ import os
 import zipfile
 import tarfile
 import tarfile
-import sendgrid-python
+import sendgrid
 
 '''
 def zip(src, dst):
