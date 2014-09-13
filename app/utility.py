@@ -3,8 +3,6 @@ import zipfile
 import tarfile
 import tarfile
 import sendgrid
-import facebook
-
 '''
 def zip(src, dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
