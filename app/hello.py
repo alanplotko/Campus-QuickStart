@@ -7,4 +7,4 @@ app = Bottle()
 def hello():
     return "Hello World!"
 
-serve(app)
+serve(app, host='localhost')
