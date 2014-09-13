@@ -16,7 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="static/assets/css/main.css" rel="stylesheet">
-    <link href="http://yui.yahooapis.com/combo?pure/0.5.0/base-min.css&pure/0.5.0/forms-min.css" rel="stylesheet">
+    <link href="http://yui.yahooapis.com/combo?pure/0.5.0/base-min.css&pure/0.5.0/buttons-min.css&pure/0.5.0/forms-min.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -78,33 +78,33 @@
 			    <fieldset>
 			        <div class="pure-control-group">
 			            <label for="full-name">Your Full Name</label>
-			            <input id="full-name" type="text" placeholder="Your Full Name" required="true" autocomplete="off">
+			            <input id="full-name" type="text" placeholder="Your Full Name" required="true" maxlength="100" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
 			            <div id="email-alert">Please type in a valid email address.</div><br />
 			            <label for="email">Your Email Address</label>
-			            <input id="email" type="email" placeholder="Your Email Address" required="true" autocomplete="off">
+			            <input id="email" type="email" placeholder="Your Email Address" required="true" maxlength="60" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
 			            <label for="organization-name">Organization Name</label>
-			            <input id="organization-name" type="text" placeholder="Organization Name" required="true" autocomplete="off">
+			            <input id="organization-name" type="text" placeholder="Organization Name" required="true" maxlength="60" autocomplete="off">
 			        </div>
 
 			   		<div class="pure-control-group">
 			            <label for="school-name">HS/University Name</label>
-			            <input id="school-name" type="text" placeholder="HS/University Name" required="true" autocomplete="off">
+			            <input id="school-name" type="text" placeholder="HS/University Name" required="true" maxlength="60" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
 			            <div id="description-alert">Briefly summarize what your organization is about.</div><br />
 			            <label for="description">Organization Description</label>
-			            <textarea id="description" placeholder="Description" required="true"></textarea>
+			            <textarea id="description" placeholder="Description" required="true" maxlength="250"></textarea>
 			        </div>
 
 			        <div class="pure-controls">
-			            <button id="submit-button" type="submit" class="pure-button pure-button-primary" disabled="true">Create Organization</button>
+			            <button type="submit" class="pure-button pure-button-primary">Let's get started with:</button><div id="submit-text"><span id="typed-cursor" class="blinking">|</span>?</div>
 			        </div>
 			    </fieldset>
 			</form>
@@ -211,53 +211,27 @@
 	});
 
 	$('#organization-name').on('input', function() {
-	  	if($('#description').val().length >= 0 && $('#description').val().length < 50) {
-	    	$('#submit-button').text('Let\'s get started with ' + $('#organization-name').val() + '!');
-	    	if($('#organization-name').val().length < 30) {
-				$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
-			}
-			else {
-				$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
-			}
+	  	if($('#organization-name').val().length >= 0 && $('#organization-name').val().length < 30) {
+	    	$('#submit-text').html($('#organization-name').val() + '<span id="typed-cursor" class="blinking">|</span>');
+			$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
+		}
+		else {
+			$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
+	    	$('#submit-text').text($('#organization-name').val().substring(0, 30) + '. . .');			
 		}
 	});
 
 	$('#description').on('input', function() {
-	  	if($('#description').val().length > 50 && $('#description').val().length < 500) {
+	  	if($('#description').val().length > 0 && $('#description').val().length < 250) {
 	    	$('#description-alert').text("Awesome!").css('color', 'green');
 		}
+		if($('#organization-name').val().length < 30) {
+			$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
+		}
 		else {
-			if($('#organization-name').val().length < 30) {
-				$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
-			}
-			else {
-				$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
-			}
+			$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
 		}
 	});
-
-	$(document).ready(function (){
-	    validate();
-	    $('#full-name, #email, #organization-name, #school-name, #description').change(validate);
-	});
-
-	function validate(){
-	    if ($('#full-name').val().length   			>   0   	&& 
-	    	$('#full-name').val().length   			<   50  	&&
-	        isValidEmailAddress($('#email').val()) 				&&
-	        $('#organization-name').val().length    >   0		&&
-	        $('#organization-name').val().length    <   100		&&
-	        $('#school-name').val().length    		>   0		&&
-	        $('#school-name').val().length    		<   100		&&
-	        $('#description').val().length    		>   50		&&
-	        $('#description').val().length    		<   500			) {
-	        
-	        $("#submit-button").prop("disabled", false);
-	    }
-	    else {
-	        $("#submit-button").prop("disabled", true);
-	    }
-	}
 
 	function isValidEmailAddress(emailAddress) {
     	var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
