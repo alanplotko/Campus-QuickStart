@@ -7,4 +7,4 @@ app = Bottle()
 def hello():
     return "Hello World!"
 
-serve(app, host='localhost')
+serve(app, host='campusqs14.herokuapp.com')
