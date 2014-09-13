@@ -55,10 +55,14 @@
 			<div class="row centered">
 				<div class="col-lg-12">
 				<h1>Campus QuickStart</h1>
+				% if defined('register_success') and "True" in register_success and defined('first_name'):
+        		<h1 style="font-size: 36px; margin: 40px 0 0 0;">Thanks for signing up, {{ first_name }}!</h1><br />
+        		<h2 style="font-size: 36px;">Log in with your credentials to begin!</h2><br />
+        		% else:
         		<h1 style="font-size: 36px; margin: 40px 0 0 0;">We'll take care of your organization's online presence, <br />so you can focus on the big picture.</h1><br />
-
         		<h2 style="font-size: 36px;">Let's get started!</h2><br />
-
+        		% end
+        		
 				<a id="signup" href="#signup">
 					<span class="fa-stack fa-2x">
 					  <i class="fa fa-angle-double-down fa-stack-1x" style="color: #fff;"></i>
@@ -77,9 +81,6 @@
 			% if defined('result'):
             	<legend>{{ result }}</legend>
             % end
-            % if defined('flag') and '1' in flag:
-            	<script>$('#signup').click();</script>
-            % end
             % if not defined('result') or "signed up" not in result:
 			<form class="pure-form pure-form-aligned" action="/" method="post">
 			    <fieldset>
@@ -92,6 +93,12 @@
 			            <div id="email-alert">Please type in a valid email address.</div><br />
 			            <label for="email">Your Email Address</label>
 			            <input id="email" name="email" type="email" placeholder="Your Email Address" required="true" maxlength="60" autocomplete="off">
+			        </div>
+
+			        <div class="pure-control-group">
+			            <div id="password-alert">Your password must be a minimum of 8 characters, with a minimum<br /> of 1 of each: numbers and uppercase, lowercase, and special characters.</div><br />
+			            <label for="password">Your Password</label>
+			            <input id="password" name="password" type="password" placeholder="Password" required="true" minlength="8" maxlength="60" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
@@ -192,7 +199,7 @@
 	      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
 	      if (target.length) {
 	        $('html,body').animate({
-	          scrollTop: target.offset().top - 50
+	          scrollTop: target.offset().top + 75
 	        }, 1000);
 	        return false;
 	      }
@@ -215,6 +222,15 @@
 		}
 		else {
 	    	$('#email-alert').text('Please type in a valid email address.').css('color', 'red');
+		}
+	});
+
+	$('#password').on('input', function() {
+	  	if(isStrongPassword($('#password').val())) {
+	    	$('#password-alert').text('Strong Password').css('color', 'green');
+		}
+		else {
+	    	$('#password-alert').html('Your password must be a minimum of 8 characters, with a minimum<br /> of 1 of each: numbers and uppercase, lowercase, and special characters.').css('color', 'red');
 		}
 	});
 
@@ -247,6 +263,11 @@
 	function isValidEmailAddress(emailAddress) {
     	var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
     	return pattern.test(emailAddress);
+	};
+
+	function isStrongPassword(password) {
+    	var pattern = new RegExp(/^(?=.{8,}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).*$/);
+    	return pattern.test(password);
 	};
 	</script>
   </body>

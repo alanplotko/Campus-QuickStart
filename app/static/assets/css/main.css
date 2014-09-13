@@ -410,7 +410,7 @@ a:after {
 }
 
 /* Home - Form */
-#email-alert, #description-alert {
+#email-alert, #description-alert, #password-alert {
     font-size: 14px;
     font-weight: normal;
     font-style: italic;

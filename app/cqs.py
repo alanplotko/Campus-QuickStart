@@ -19,7 +19,8 @@ def submit_form():
         '_id': data.get('email')
       }
       userid = mongo_db.users.insert(nuser)
-      return bottle.template('index', result='You\'ve been signed up! Check your email for a confirmation link.', flag='1')
+      return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
+        first_name=str(data.get('full-name').split(" ")[0]), register_success='True')
   else:
     return bottle.template('index', result=None)
 
