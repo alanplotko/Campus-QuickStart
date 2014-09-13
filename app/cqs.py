@@ -7,7 +7,7 @@ bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 
 @bottle.post('/#signup')
 def submit_form():
-  # mongo_db = mongodbconnect.mongoconn()
+  mongo_db = mongodbconnect.mongoconn()
   data = bottle.request.forms
   if data.get('email'):
     tuser = user_find(data.get('email'))
@@ -54,4 +54,4 @@ def login():
 def static_file(filename):
   return bottle.static_file(filename, root=os.path.join(PROJECT_DIR, 'static/assets'))
 
-bottle.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+bottle.run(server="waitress", host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
