@@ -3,7 +3,14 @@ import bottle
 import pymongo
 
 def mongoconn():
-	MONGO_URL = os.getenv('MONGOHQ_URL')
-	connection = pymongo.Connection(MONGO_URL)
-	db = connection['cqs_data']
+	#if in production environment, get URL from environment variable
+	try:
+		MONGO_URL = os.getenv('MONGOHQ_URL')
+		connection = pymongo.Connection(MONGO_URL)
+		db = connection['cqs_data']
+	# if in development environment, use hardcoded URL
+	except:
+		MONGO_URL = "mongodb://gabeochoa:password1@kahana.mongohq.com:10009/cqs_data"
+		connection = pymongo.Connection(MONGO_URL)
+		db = connection['cqs_data']
 	return db
