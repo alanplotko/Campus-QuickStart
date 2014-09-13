@@ -60,42 +60,33 @@
         </div><!-- container -->
     </div><!--  bluewrap -->
 
-
-    <div class="container w">
+<div id="form" name="form" class="container w" autocomplete="off">
         <div class="row centered">
-            <br><br>
-            <div class="col-lg-3">
-                <img class="img-circle" src="static/assets/img/pic.jpg" width="110" height="110" alt="">
-                <h4>Frank Lampard</h4>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-                <p><a href="#">@Frank_BlackTie</a></p>
-            </div><!-- col-lg-3 -->
+            <h1 id="greeting">Welcome!</h1>
+            <form class="pure-form pure-form-aligned" action="/">
+                <fieldset>
+                    <div class="pure-control-group">
+                        <div id="email-alert">Please type in your email address.</div><br />
+                        <label for="email">Your Email Address</label>
+                        <input id="email" type="email" placeholder="Your Email Address" required="true" autocomplete="off">
+                    </div>
 
-            <div class="col-lg-3">
-                <img class="img-circle" src="static/assets/img/pic2.jpg" width="110" height="110" alt="">
-                <h4>David Wright</h4>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-                <p><a href="#">@David_BlackTie</a></p>
-            </div><!-- col-lg-3 -->
+                    <div class="pure-control-group">
+                        <div id="password">Password.</div><br />
+                        <label for="password">Password</label>
+                        <textarea id="password" placeholder="password" required="true"></textarea>
+                    </div>
 
-            <div class="col-lg-3">
-                <img class="img-circle" src="static/assets/img/pic3.jpg" width="110" height="110" alt="">
-                <h4>Mark Milestone</h4>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-                <p><a href="#">@Mark_BlackTie</a></p>
-            </div><!-- col-lg-3 -->
-
-            <div class="col-lg-3">
-                <img class="img-circle" src="static/assets/img/pic4.jpg" width="110" height="110" alt="">
-                <h4>Tania Tissen</h4>
-                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
-                <p><a href="#">@Tania_BlackTie</a></p>
-            </div><!-- col-lg-3 -->
-
+                    <div class="pure-controls">
+                        <button id="submit-button" type="submit" class="pure-button pure-button-primary" disabled="true">Login</button>
+                    </div>
+                </fieldset>
+            </form>
         </div><!-- row -->
         <br>
         <br>
     </div><!-- container -->
+
 
     <div id="r">
         <div class="container">
