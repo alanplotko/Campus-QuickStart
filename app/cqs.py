@@ -5,7 +5,7 @@ import mongodbconnect
 PROJECT_DIR = os.path.dirname(__file__)
 bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 
-@bottle.post('/#signup')
+@bottle.route('/#signup', method="POST")
 def submit_form():
   mongo_db = mongodbconnect.mongoconn()
   data = bottle.request.forms
