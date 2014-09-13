@@ -3,7 +3,6 @@ import zipfile
 import tarfile
 import tarfile
 import sendgrid
-
 '''
 def zip(src, dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
@@ -41,3 +40,9 @@ def sendemail(email_to, full_name):
     status, msg = sg.send(message)
 
     return status
+
+
+
+
+
+
