@@ -8,7 +8,8 @@ bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 def index():
   data = bottle.request.forms
   if data.get('email'):
-    # check for pre existance
+    return data.get('email')
+    
     tuser = user_find(data.get('email'))
     if tuser:
       return bottle.template('index', result='You are already registered!')

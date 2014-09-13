@@ -215,7 +215,7 @@
 	    	$('#submit-text').html($('#organization-name').val() + '<span id="typed-cursor" class="blinking">|</span>');
 		}
 		else {
-	    	$('#submit-text').text($('#organization-name').val().substring(0, 30) + '. . .');			
+	    	$('#submit-text').text($('#organization-name').val().substring(0, 30) + '. . .');
 		}
 		validateDescription($('#description').val());
 	});
@@ -228,7 +228,7 @@
 		if($('#description').val().length > 0 && $('#description').val().length < 250) {
 	    	$('#description-alert').text("Awesome!").css('color', 'green');
 		}
-		else if($('#organization-name').val().length < 20) {
+		else if($('#organization-name').val().length > 0 && $('#organization-name').val().length < 20) {
 			$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
 		}
 		else {
