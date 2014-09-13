@@ -33,6 +33,7 @@ def submit_form():
           '_school': data.get('school-name'),
           '_o-name-lower': (data.get('organization-name').replace(" ", "-")).lower(),
           '_school-lower': (data.get('school-name').replace(" ", "-")).lower(),
+          '_const': None,
           '_hosting': None,
           '_theme': None,
           '_desc': data.get('description')
