@@ -5,7 +5,8 @@ import pymongo
 def mongoconn():
 	#if in production environment, get URL from environment variable
 	try:
-		MONGO_URL = os.environ.get('MONGOHQ_URL')
+		MONGO_URL = "mongodb://gabeochoa:password1@kahana.mongohq.com:10009/cqs_data"
+		#MONGO_URL = os.environ.get('MONGOHQ_URL')
 		connection = pymongo.Connection(MONGO_URL)
 		db = connection['cqs_data']
 	# if in development environment, use hardcoded URL
