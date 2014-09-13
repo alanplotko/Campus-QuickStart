@@ -31,11 +31,9 @@ def tar(src, dst):
     return
 '''
 def sendemail(efrom, eto, esubject,ebody):
-    sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD', raise_errors=True)
+    sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
     message = sendgrid.Mail(to=eto, subject=esubject, html=ebody, text=ebody, from_email=efrom)
     
-    try:
-        status, msg = sg.send(message)
-    except sendgrid.SendGridClientError or sendgrid.SendGridServerError:
-        pass
+    status, msg = sg.send(message)
+
     return status

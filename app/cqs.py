@@ -21,7 +21,7 @@ def submit_form():
         "You now have access to Campus QuickStart, where you can set up your website and social media platforms." +
         "Log in with your credentials to see it in action now!")
 
-      if status != 200:
+      if status < 200 or status >= 300:
         return bottle.template('index', result='There was an error trying to send an email to ' + data.get('email') +
           '. Please wait a few minutes before trying to register again.')        
       else:
