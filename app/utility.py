@@ -3,7 +3,7 @@ import zipfile
 import tarfile
 import tarfile
 import sendgrid
-
+'''
 def zip(src, dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
@@ -29,7 +29,7 @@ def tar(src, dst):
             tar.add(arcname)
     tar.close()
     return
-
+'''
 def sendemail(efrom, eto, esubject,ebody):
     sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
 
