@@ -154,7 +154,7 @@ a:after {
 }
 
 #headerwrap h1 {
-	margin-top: 100px;
+	margin-top: 140px;
 	color: white;
 	font-size: 70px;
 	font-weight: 300;
@@ -494,8 +494,4 @@ a:after {
 
 #form input[type=submit] {
     font-weight: bold;
-}
-
-#title {
-    margin-top: 20px;
 }
