@@ -2,6 +2,7 @@ import os
 import bottle
 from bottle import request, route, template
 import mongodbconnect
+from utility import sendemail
 
 PROJECT_DIR = os.path.dirname(__file__)
 bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
@@ -25,6 +26,7 @@ def submit_form():
         '_desc': data.get('description')
       }
       userid = mongo_db.users.insert(nuser)
+      sendemail("from", "to", "subject", "body")
       return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
         first_name=str(data.get('full-name').split(" ")[0]), register_success='True')
   else:
