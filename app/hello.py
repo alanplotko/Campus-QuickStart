@@ -7,4 +7,4 @@ app = Bottle()
 def hello():
     return "Hello World!"
 
-serve(app, host='127.0.0.1', port=8080)
+serve(app)
