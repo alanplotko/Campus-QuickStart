@@ -38,8 +38,8 @@ def index():
 def about():
   return bottle.template('about')
 
-@bottle.route('/login')
-def login(): 
+@bottle.route('/login', method="POST")
+def submitlogin(): 
   data = bottle.request.forms
   if data.get('email'):
     # check for pre existance
