@@ -17,6 +17,7 @@ def submit_form():
     else:
       nuser = {
         '_id': data.get('email')
+        '_pass': data.get('password')
       }
       userid = mongo_db.users.insert(nuser)
       return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
@@ -44,6 +45,8 @@ def login():
     # check for pre existance
     tuser = mongo_db.users.find(data.get('email'))
     if tuser:
+      #then we can check password
+      mongo_db.users.find_one(tuser)
       return bottle.template('welcome', result='Logged In Succesfully!')
     else:
       return bottle.template('login', result='Incorrect Information.')
