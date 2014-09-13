@@ -31,7 +31,7 @@ def tar(src, dst):
     return
 '''
 def sendemail(email_to, full_name):
-    sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
+    sg = sendgrid.SendGridClient(os.environ.get('SENDGRID_USERNAME'), os.environ.get('SENDGRID_PASSWORD'))
     message = sendgrid.Mail()
     message.add_to(full_name + " <" + email_to + ">")
     message.set_subject("Welcome to Campus QuickStart!")
