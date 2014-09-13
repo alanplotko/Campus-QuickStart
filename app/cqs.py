@@ -7,7 +7,7 @@ bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 
 mongo_db = mongodbconnect.mongoconn()
 
-@bottle.route('/', method="POST")
+@bottle.route('/#signup', method="POST")
 def submit_form():
   data = bottle.request.forms
   if data.get('email'):
