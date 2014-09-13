@@ -67,6 +67,20 @@ def login():
     return bottle.template('login', result='Incorrect Information.')
   return bottle.template('welcome')
 
+@bottle.route('/account')
+def account():
+  loggeduser = mongo_db.users.find(request.get_cookie("account", secret='some-secret-key'))
+  if not loggeduser:
+    return bottle.template('login', result='Incorrect Information.')
+  else:
+    loggeduser1 = loggeduser[0]
+    lemail = loggeduser1['_id']
+   # lname = loggeduser1['_fullname']
+   #lpass = loggeduser1['_pass']
+   # lschool = loggeduser1['_school']
+   # ldesc = loggeduser1['_desc']
+    return bottle.template('account')
+
 @bottle.route('/static/assets/<filename:path>', name='static')
 def static_file(filename):
   return bottle.static_file(filename, root=os.path.join(PROJECT_DIR, 'static/assets'))
