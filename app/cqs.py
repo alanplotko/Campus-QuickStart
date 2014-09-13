@@ -16,7 +16,7 @@ def submit_form():
       return bottle.template('index', result='You are already registered!')
     else:
       nuser = {
-        '_id': data.get('email')
+        '_id': data.get('email'),
         '_pass': data.get('password')
       }
       userid = mongo_db.users.insert(nuser)
