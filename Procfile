@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT -Dmongodb.uri=$MONGOHQ_URL app:cqs
+web: waitress-serve --port=$PORT app:cqs
