@@ -213,25 +213,28 @@
 	$('#organization-name').on('input', function() {
 	  	if($('#organization-name').val().length >= 0 && $('#organization-name').val().length < 30) {
 	    	$('#submit-text').html($('#organization-name').val() + '<span id="typed-cursor" class="blinking">|</span>');
-			$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
 		}
 		else {
-			$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
 	    	$('#submit-text').text($('#organization-name').val().substring(0, 20) + '. . .');			
 		}
+		validateDescription($('#description').val());
 	});
 
 	$('#description').on('input', function() {
-	  	if($('#description').val().length > 0 && $('#description').val().length < 250) {
+		validateDescription($('#description').val());
+	});
+
+	function validateDescription(description) {
+		if($('#description').val().length > 0 && $('#description').val().length < 250) {
 	    	$('#description-alert').text("Awesome!").css('color', 'green');
 		}
-		if($('#organization-name').val().length < 20) {
+		else if($('#organization-name').val().length < 20) {
 			$('#description-alert').text("Briefly summarize what " + $('#organization-name').val() + " is about.").css('color', 'red');
 		}
 		else {
 			$('#description-alert').text("Briefly summarize what your organization is about.").css('color', 'red');
 		}
-	});
+	}
 
 	function isValidEmailAddress(emailAddress) {
     	var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
