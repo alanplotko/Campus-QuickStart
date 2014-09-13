@@ -31,6 +31,17 @@ def about():
   return bottle.template('about')
 
 @bottle.route('/login')
+def login(): 
+  data = bottle.request.forms
+  if data.get('email'):
+    # check for pre existance
+    tuser = mongo_db.users.find(data.get('email'))
+    if tuser:
+      return bottle.template('welcome', result='Logged In Succesfully!')
+    else:
+      return bottle.template('login', result='Incorrect Information.')
+
+@bottle.route('/login')
 def login():
   return bottle.template('login')
 
