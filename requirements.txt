@@ -1,3 +1,6 @@
 bottle==0.12.7
 pymongo==2.7.2
+sendgrid==1.1.1
+smtpapi==0.1.2
+unittest2py3k==0.5.1
 waitress==0.8.9

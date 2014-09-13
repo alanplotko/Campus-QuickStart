@@ -31,14 +31,11 @@ def tar(src, dst):
     return
 '''
 def sendemail(efrom, eto, esubject,ebody):
-    sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD')
-
-    message = sendgrid.Mail()
-    message.add_to('G Doe <aplotko1@binghamton.edu>')
-    message.set_subject('Example')
-    message.set_html('Body')
-    message.set_text('Body')
-    message.set_from('Doe John <doe@email.com>')
-    status, msg = sg.send(message)
-
-    return 
+    sg = sendgrid.SendGridClient('SENDGRID_USERNAME', 'SENDGRID_PASSWORD', raise_errors=True)
+    message = sendgrid.Mail(to=eto, subject=esubject, html=ebody, text=ebody, from_email=efrom)
+    
+    try:
+        status, msg = sg.send(message)
+    except sendgrid.SendGridClientError or sendgrid.SendGridServerError:
+        pass
+    return status

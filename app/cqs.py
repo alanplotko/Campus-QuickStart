@@ -17,18 +17,25 @@ def submit_form():
     if tuser:
       return bottle.template('index', result='You are already registered!')
     else:
-      nuser = {
-        '_id': data.get('email'),
-        '_pass': data.get('password'),
-        '_fullname': data.get('full-name'),
-        '_o-name': data.get('organization-name'),
-        '_school': data.get('school-name'),
-        '_desc': data.get('description')
-      }
-      userid = mongo_db.users.insert(nuser)
-      sendemail("from", "to", "subject", "body")
-      return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
-        first_name=str(data.get('full-name').split(" ")[0]), register_success='True')
+      status = sendemail("aplotko1@binghamton.edu", data.get('email'), "Welcome to Campus QuickStart", 
+        "You now have access to Campus QuickStart, where you can set up your website and social media platforms.\
+         Log in with your credentials to see it in action now!")
+
+      if status != 200:
+        return bottle.template('index', result='There was an error trying to send an email to ' + data.get('email') '.\
+          Please wait a few minutes before trying to register again.')        
+      else:
+        nuser = {
+          '_id': data.get('email'),
+          '_pass': data.get('password'),
+          '_fullname': data.get('full-name'),
+          '_o-name': data.get('organization-name'),
+          '_school': data.get('school-name'),
+          '_desc': data.get('description')
+        }
+        userid = mongo_db.users.insert(nuser)
+        return bottle.template('index', result='You\'ve been signed up! Log in with your credentials.', 
+          first_name=str(data.get('full-name').split(" ")[0]), register_success='True')
   else:
     return bottle.template('index', result=None)
 
