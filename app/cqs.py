@@ -232,9 +232,7 @@ def show_site(school, organization):
       '_school': re.compile(school.replace("-", " "), re.IGNORECASE),
       '_o-name': re.compile(organization.replace("-", " "), re.IGNORECASE)
     })
-    return bottle.template('organizations/' + school + '/' + organization + '/index',
-      title=user['_o-name'], description=user['_desc'], full_name=user['_fullname'], 
-      constitution=user['_const'], gravatar=makeGravatar(user['_id']), email=user['_id'])
+    return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], gravatar=makeGravatar(user['_id']), email=user['_id'])
 
 def makeGravatar(email):
   return "http://www.gravatar.com/avatar/" + hashlib.md5(email.encode('utf-8')).hexdigest() + "?s=150"

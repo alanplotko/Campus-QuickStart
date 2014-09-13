@@ -54,7 +54,12 @@
                 <div class="col-lg-8 col-lg-offset-2">
                 <h1 style="color: #fff; font-weight: bold; text-decoration: underline;">Your Clubs & Organizations</h1>
                 <ul id="clubOrg_list">
-                    <li><a href="/manage/step/1">Manage {{ school }}'s {{ o_name }}</a></li>
+                    <li><a href="/manage/step/1">
+                    % if not defined('theme') or not defined('hosting'):
+                    First time setup: {{ o_name }}
+                    % else:
+                    Manage: {{ o_name }}
+                    </a></li>
                 </ul>
                 </div>
             </div><!-- row -->
@@ -88,6 +93,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="static/assets/js/bootstrap.min.js"></script>
   </body>
 </html>
