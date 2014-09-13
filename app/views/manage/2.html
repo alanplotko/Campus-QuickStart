@@ -11,6 +11,8 @@
     </fieldset>
 </form>
 
+% if constitution != None:
 <script>
 document.getElementById("constitution").value = '{{ user["_const"] }}';
 </script>
+% end
