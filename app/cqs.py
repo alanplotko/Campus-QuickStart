@@ -106,11 +106,42 @@ def manage(step):
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
   if step == 1:
-    return bottle.template('manage', 
-      username=luser['_id'].split("@")[0], 
+    return bottle.template('manage',
       user=dict(luser),
       step=step,
+      title="Verify " + luser['_o-name'] + "'s information!",
       desc="If you have anything you'd like to fix since your registration, here's your chance to do so.")
+  elif step == 2:
+    return bottle.template('manage',
+      user=dict(luser),
+      step=step,
+      title="Draft a constitution!",
+      desc="Every club or organization has a basic set of goals. Can you clarify yours?")
+  elif step == 3:
+    return bottle.template('manage',
+      user=dict(luser),
+      step=step,
+      title="Create a website!",
+      desc="Get your club and organization on the web for all to see!")
+
+@bottle.route('/manage/<step>', method="POST")
+def manage_update(step):
+  step = int(step)
+  session = get_session()
+  if not session: bottle.redirect('/login')
+  luser = user_find(session['uid'])
+  if not luser: bottle.redirect('/logout')
+  if step == 1:
+    mongo_db.users.update({'_id': luser['_id']}, { '$set': {
+      '_o-name': bottle.request.POST['organization-name'],
+      '_school': bottle.request.POST['school-name'],
+      '_desc': bottle.request.POST['description']
+    }});
+  elif step == 2:
+    mongo_db.users.update({'_id': luser['_id']}, { '$set': {
+      '_const': bottle.request.POST['constitution']
+    }});
+  return bottle.redirect(str(step + 1))
 
 @bottle.route('/account')
 def account():

@@ -500,11 +500,11 @@ a:after {
     margin-right: 20px;
 }
 
-#clubOrg_list {
+#clubOrg_list, #webChoices_list {
     margin: 50px;
 }
 
-#clubOrg_list li {
+#clubOrg_list li, #webChoices_list li {
     font-size: 24px;
     color: #fff;
     font-weight: bold;
@@ -515,12 +515,29 @@ a:after {
     border-radius: 5px;
 }
 
+#webChoices_list li {
+    border: 2px dotted #000;
+    width: 200px;
+    height: 200px;
+    margin-right: 50px;
+    color: #000;
+}
+
+#webChoices_list li i {
+    font-size: 90px;
+    margin-top: 12px;
+}
+
 #clubOrg_list a {
     color: #fff;
 }
 
 #clubOrg_list a:hover {
     color: #ddd;
+}
+
+#webChoices_list a:hover {
+    color: #666;
 }
 
 #r {

@@ -1,0 +1,26 @@
+<form class="pure-form pure-form-aligned" action="/manage/1" method="post">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="organization-name">Organization Name</label>
+            <input id="organization-name" name="organization-name" type="text" placeholder="Organization Name" required="true" maxlength="60" autocomplete="off" value='{{ name }}'>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="school-name">HS/University Name</label>
+            <input id="school-name" name="school-name" type="text" placeholder="HS/University Name" required="true" maxlength="60" autocomplete="off" value='{{ school }}'>
+        </div>
+
+        <div class="pure-control-group">
+            <label for="description">Organization Description</label>
+            <textarea id="description" name="description" placeholder="Description" required="true" maxlength="250" rows="4" cols="58"></textarea>
+        </div>
+
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-active">Update Basic Information</button>
+        </div>
+    </fieldset>
+</form>
+
+<script>
+document.getElementById("description").value = '{{ description }}';
+</script>

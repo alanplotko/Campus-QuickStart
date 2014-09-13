@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/assets/css/main.css" rel="stylesheet">
+    <link href="http://yui.yahooapis.com/combo?pure/0.5.0/base-min.css&pure/0.5.0/buttons-min.css&pure/0.5.0/forms-min.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -41,7 +42,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li class="active"><a href="/dashboard">MY DASHBOARD</a></li>
-            <li><a>Welcome back, {{ username }}!</a></li>
+            <li><a>Welcome back, {{ user['_id'].split("@")[0] }}!</a></li>
             <li><a href="/logout">LOGOUT</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -52,29 +53,30 @@
         <div class="container">
             <div class="row centered">
                 <div class="col-lg-10 col-lg-offset-1">
-                <h2 style="color: #fff; font-weight: bold; margin: 0; padding: 0;">{{ user['_o-name'] }}</h2>
+                <h2 style="color: #fff; font-weight: bold; padding-top: 80px; margin: 0;">{{ user['_o-name'] }}</h2>
                 </div>
             </div><!-- row -->
         </div><!-- container -->
     </div><!--  bluewrap -->
 
-    <div id="signup" name="signup" class="container w" autocomplete="off">
+    <div class="container w" autocomplete="off">
         <div class="row centered">
-        </div><!-- row -->
-        <br>
-        <br>
-    </div><!-- container -->
+            % include('manage/' + str(step) + '.html', name=user['_o-name'], school=user['_school'], description=user['_desc'])
+            </div><!-- row -->
+        </div><!-- container -->
+    </div><!-- r wrap -->
 
-    <div id="r" style="margin: 0;">
+    <div id="r">
         <div class="container">
             <div class="row centered">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h4>STEP {{ step }}: Verify {{ user['_o-name'] }}'s information!</h4>
+                    <h4>STEP {{ step }}: {{ title }} </h4>
                     <p>{{ desc }}</p>
                 </div>
             </div><!-- row -->
         </div><!-- container -->
     </div><!-- r wrap -->
+    
 
     <!-- FOOTER -->
     <div id="f">

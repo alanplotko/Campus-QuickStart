@@ -1,0 +1,16 @@
+<form class="pure-form pure-form-aligned" action="/manage/2" method="post">
+    <fieldset>
+        <div class="pure-control-group">
+            <label for="constitution">Constitution</label>
+            <textarea id="constitution" name="constitution" placeholder="Constitution for {{ user['_o-name'] }}" required="true" maxlength="250" rows="10" cols="58"></textarea>
+        </div>
+
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-active">Update Constitution</button>
+        </div>
+    </fieldset>
+</form>
+
+<script>
+document.getElementById("constitution").value = '{{ user["_const"] }}';
+</script>
