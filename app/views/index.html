@@ -59,7 +59,7 @@
 
         		<h2 style="font-size: 36px;">Let's get started!</h2><br />
 
-				<a href="#signup">
+				<a id="signup" href="#signup">
 					<span class="fa-stack fa-2x">
 					  <i class="fa fa-angle-double-down fa-stack-1x" style="color: #fff;"></i>
 					  <i class="fa fa-circle-o fa-stack-2x" style="color: #fff;"></i>
@@ -77,8 +77,11 @@
 			% if defined('result'):
             	<legend>{{ result }}</legend>
             % end
+            % if defined('flag') and flag == 1:
+            	<script>$('#signup').click();</script>
+            % end
             % if not defined('result') or "signed up" not in result:
-			<form class="pure-form pure-form-aligned" action="/#signup" method="post">
+			<form class="pure-form pure-form-aligned" action="/" method="post">
 			    <fieldset>
 			        <div class="pure-control-group">
 			            <label for="full-name">Your Full Name</label>

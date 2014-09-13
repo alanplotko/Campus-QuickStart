@@ -7,7 +7,7 @@ bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 
 mongo_db = mongodbconnect.mongoconn()
 
-@bottle.route('/#signup', method="POST")
+@bottle.route('/', method="POST")
 def submit_form():
   data = bottle.request.forms
   if data.get('email'):
@@ -19,7 +19,7 @@ def submit_form():
         '_id': data.get('email')
       }
       userid = mongo_db.users.insert(nuser)
-      return bottle.template('index', result='You\'ve been signed up! Check your email for a confirmation link.')
+      return bottle.template('index', result='You\'ve been signed up! Check your email for a confirmation link.', flag='1')
   else:
     return bottle.template('index', result=None)
 
