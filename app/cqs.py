@@ -43,10 +43,9 @@ def login():
   data = bottle.request.forms
   if data.get('email'):
     # check for pre existance
-    tuser = mongo_db.users.find(data.get('email'))
+    tuser = mongo_db.users.find({data.get('email')}, {data.get('password')})
     if tuser:
-      #then we can check password
-      mongo_db.users.find_one(tuser)
+      #then we have a match
       return bottle.template('welcome', result='Logged In Succesfully!')
     else:
       return bottle.template('login', result='Incorrect Information.')
