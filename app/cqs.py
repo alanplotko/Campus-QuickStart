@@ -106,7 +106,11 @@ def manage(step):
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
   if step == 1:
-    return bottle.template('manage', username=luser['_id'].split("@")[0], user=dict(luser))
+    return bottle.template('manage', 
+      username=luser['_id'].split("@")[0], 
+      user=dict(luser),
+      step=step,
+      desc="If you have anything you'd like to fix since your registration, here's your chance to do so.")
 
 @bottle.route('/account')
 def account():
