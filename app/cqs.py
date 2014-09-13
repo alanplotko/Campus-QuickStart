@@ -4,7 +4,7 @@ import bottle
 PROJECT_DIR = os.path.dirname(__file__)
 bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 
-@bottle.route('/')
+@bottle.post('/')
 def index():
   data = bottle.request.forms
   if data.get('email'):
