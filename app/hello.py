@@ -1,7 +1,10 @@
-from bottle import route, run
+from bottle import route, run, Bottle
+from waitress import serve
 
-@route('/')
+app = Bottle()
+
+@app.route('/')
 def hello():
     return "Hello World!"
 
-run(host='localhost', port=8080, debug=True)
+serve(app, host='127.0.0.1', port=8080)
