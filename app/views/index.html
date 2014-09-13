@@ -77,7 +77,7 @@
 			% if defined('result'):
             	<legend>{{ result }}</legend>
             % end
-            % if defined('flag') and flag == 1:
+            % if defined('flag') and 1 in flag:
             	<script>$('#signup').click();</script>
             % end
             % if not defined('result') or "signed up" not in result:
