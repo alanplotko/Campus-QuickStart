@@ -1,10 +1,5 @@
-from bottle import route, run, Bottle
-from waitress import serve
+from bottle import route, run
 
-app = Bottle()
-
-@app.route('/')
+@route('/')
 def hello():
     return "Hello World!"
-
-serve(app, host='campusqs14.herokuapp.com')
