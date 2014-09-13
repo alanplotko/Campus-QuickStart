@@ -98,7 +98,8 @@ def dashboard():
   if not session: bottle.redirect('/login')
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
-  return bottle.template('welcome', username=luser['_id'].split("@")[0], o_name=luser['_o-name'], school=luser['_school'])
+  return bottle.template('welcome', username=luser['_id'].split("@")[0], o_name=luser['_o-name'], school=luser['_school'],
+    theme=luser['_theme'], hosting=luser['_hosting'])
 
 @bottle.route('/manage/step/<step>')
 def manage(step):
