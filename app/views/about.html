@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="static/assets/css/main.css" rel="stylesheet">
+    <link href="http://yui.yahooapis.com/combo?pure/0.5.0/base-min.css&pure/0.5.0/buttons-min.css&pure/0.5.0/forms-min.css" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -42,8 +43,18 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/">HOME</a></li>
             <li class="active"><a href="/about">ABOUT</a></li>
-            <li><a href="/login">LOGIN</a></li>
-            <li><a data-toggle="modal" data-target="#myModal" href="#myModal"><i class="fa fa-envelope-o"></i></a></li>
+            <li id="login-nav"><a href="javascript:showLogin();">LOGIN</a></li>
+            <form id="signin" name="signin" class="pure-form" style="display: none;" action="/login" method="post">
+	            %if defined('error'):
+	            	<span style="color: #fff;">An error occured: {{ error }}</span>
+	            % end
+			    <fieldset>
+			        <input type="email" name="email" placeholder="Email">
+			        <input type="password" name="password" placeholder="Password">
+			        <input type="hidden" name="page" value="about">
+			        <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+			    </fieldset>
+			</form>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -110,33 +121,32 @@
 		</div><!-- container -->
 	</div><!-- Footer -->
 
-
-	<!-- MODAL FOR CONTACT -->
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel">Contact Us</h4>
-	      </div>
-	      <div class="modal-body">
-		        <div class="row centered">
-		        	<p>We are available 24/7, so don't hesitate <br/>to contact us at aplotko1@binghamton.edu.</p>
-		        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script>
+    function showLogin() {
+		$(".navbar ul").css({
+			width: '700px'
+		});
+		$("#signin").css('display', 'inline-block').hide().fadeIn();
+		$("#login-nav a").prop('href', 'javascript:hideLogin();');
+	}
+	function hideLogin() {
+		$(".navbar ul").css({
+			width: ''
+		});
+		$("#signin").hide();
+		$("#login-nav a").prop('href', 'javascript:showLogin();');
+	}
+	
+	$(document).ready(function() {
+		if (window.location.href.indexOf("/login") > -1) {
+    		showLogin();
+		}
+	});
+	</script>
   </body>
 </html>
