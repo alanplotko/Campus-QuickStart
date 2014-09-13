@@ -2,20 +2,15 @@ import os
 import bottle
 import pymongo
 
-#get url that is stored in config
-MONGO_URL = "mongodb://gabeochoa:password1@kahana.mongohq.com:10009/cqs_data"
-
 def mongoconn():
-	connection = pymongo.Connection(MONGO_URL)
-	db = connection['cqs_data']
-	return str(db.test.find()[0])
-
-
-	'''
-
-import urllib
-from mongodbconnect import mongoconn
-@route('/mongo')
-def mongo():
-	return mongoconn()
-	'''
+	#if in production environment, get URL from environment variable
+	try:
+		MONGO_URL = os.getenv('MONGOHQ_URL')
+		connection = pymongo.Connection(MONGO_URL)
+		db = connection['cqs_data']
+	# if in development environment, use hardcoded URL
+	except:
+		MONGO_URL = "mongodb://gabeochoa:password1@kahana.mongohq.com:10009/cqs_data"
+		connection = pymongo.Connection(MONGO_URL)
+		db = connection['cqs_data']
+	return db

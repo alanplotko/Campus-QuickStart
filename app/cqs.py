@@ -1,27 +1,32 @@
 import os
 import bottle
+import mongodbconnect
 
 PROJECT_DIR = os.path.dirname(__file__)
 bottle.TEMPLATE_PATH.append(os.path.join(PROJECT_DIR, 'views'))
 
-@bottle.post('/')
-def index():
+mongo_db = mongodbconnect.mongoconn()
+
+@bottle.post('/#signup')
+def submit_form():
   data = bottle.request.forms
   if data.get('email'):
-    return data.get('email')
-    
     tuser = user_find(data.get('email'))
     if tuser:
       return bottle.template('index', result='You are already registered!')
     else:
       nuser = {
-        '_id': data.get('email'),
-        'pw': data.get('password')
+        '_id': data.get('email')
       }
       userid = mongo_db.users.insert(nuser)
-      return bottle.template('welcome', result='You\'ve been signed up!', email=data.get('email'))
+      return bottle.template('index', result='You\'ve been signed up! Check your email for a confirmation link.')
   else:
     return bottle.template('index', result=None)
+
+def user_find(email):
+  if not email:
+    return None
+  return mongo_db.users.find_one({ '_id': email})
 
 @bottle.route('/')
 def index():

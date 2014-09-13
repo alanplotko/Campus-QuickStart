@@ -59,7 +59,7 @@
 
         		<h2 style="font-size: 36px;">Let's get started!</h2><br />
 
-				<a href="#form">
+				<a href="#signup">
 					<span class="fa-stack fa-2x">
 					  <i class="fa fa-angle-double-down fa-stack-1x" style="color: #fff;"></i>
 					  <i class="fa fa-circle-o fa-stack-2x" style="color: #fff;"></i>
@@ -71,36 +71,40 @@
 	</div><!-- headerwrap -->
 
 
-	<div id="form" name="form" class="container w" autocomplete="off">
+	<div id="signup" name="signup" class="container w" autocomplete="off">
 		<div class="row centered">
 			<h1 id="greeting">Welcome!</h1>
-			<form class="pure-form pure-form-aligned" action="/">
+			% if defined('result'):
+            	<legend>{{ result }}</legend>
+            % end
+            % if not defined('result') or "signed up" not in result:
+			<form class="pure-form pure-form-aligned" action="/#signup" method="post">
 			    <fieldset>
 			        <div class="pure-control-group">
 			            <label for="full-name">Your Full Name</label>
-			            <input id="full-name" type="text" placeholder="Your Full Name" required="true" maxlength="100" autocomplete="off">
+			            <input id="full-name" name="full-name" type="text" placeholder="Your Full Name" required="true" maxlength="100" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
 			            <div id="email-alert">Please type in a valid email address.</div><br />
 			            <label for="email">Your Email Address</label>
-			            <input id="email" type="email" placeholder="Your Email Address" required="true" maxlength="60" autocomplete="off">
+			            <input id="email" name="email" type="email" placeholder="Your Email Address" required="true" maxlength="60" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
 			            <label for="organization-name">Organization Name</label>
-			            <input id="organization-name" type="text" placeholder="Organization Name" required="true" maxlength="60" autocomplete="off">
+			            <input id="organization-name" name="organization-name" type="text" placeholder="Organization Name" required="true" maxlength="60" autocomplete="off">
 			        </div>
 
 			   		<div class="pure-control-group">
 			            <label for="school-name">HS/University Name</label>
-			            <input id="school-name" type="text" placeholder="HS/University Name" required="true" maxlength="60" autocomplete="off">
+			            <input id="school-name" name="school-name" type="text" placeholder="HS/University Name" required="true" maxlength="60" autocomplete="off">
 			        </div>
 
 			        <div class="pure-control-group">
 			            <div id="description-alert">Briefly summarize what your organization is about.</div><br />
 			            <label for="description">Organization Description</label>
-			            <textarea id="description" placeholder="Description" required="true" maxlength="250" rows="4" cols="58"></textarea>
+			            <textarea id="description" name="description" placeholder="Description" required="true" maxlength="250" rows="4" cols="58"></textarea>
 			        </div>
 
 			        <div class="pure-controls">
@@ -108,6 +112,7 @@
 			        </div>
 			    </fieldset>
 			</form>
+            % end
 		</div><!-- row -->
 		<br>
 		<br>
