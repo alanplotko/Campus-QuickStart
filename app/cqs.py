@@ -1,7 +1,7 @@
 import os
 import bottle
 import mongodbconnect
-from utility import sendemail, sendemailcontactform
+import utility
 import uuid
 import shutil
 import re
@@ -20,7 +20,7 @@ def submit_form():
     if tuser:
       return bottle.template('index', result='You are already registered!')
     else:
-      status = sendemail(data.get('email'), data.get('full-name'))
+      status = utility.sendemail(data.get('email'), data.get('full-name'))
       if status < 200 or status >= 300:
         return bottle.template('index', result='There was an issue with your email address - please try registering again in a few minutes.', 
           first_name=str(data.get('full-name').split(" ")[0]))
@@ -160,7 +160,7 @@ def sendContactForm():
     phone = bottle.request.POST['phone']
   if 'message' in bottle.request.POST:
     message = bottle.request.POST['message']
-  sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
+  utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
 
 def setUpHosting(user, step_int, description):
   report = 'Log:\n\n'
