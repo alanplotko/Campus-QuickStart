@@ -18,12 +18,12 @@ def submit_form():
       return bottle.template('index', result='You are already registered!')
     else:
       status = sendemail("aplotko1@binghamton.edu", data.get('email'), "Welcome to Campus QuickStart", 
-        "You now have access to Campus QuickStart, where you can set up your website and social media platforms.\
-         Log in with your credentials to see it in action now!")
+        "You now have access to Campus QuickStart, where you can set up your website and social media platforms." +
+        "Log in with your credentials to see it in action now!")
 
       if status != 200:
-        return bottle.template('index', result='There was an error trying to send an email to ' + data.get('email') '.\
-          Please wait a few minutes before trying to register again.')        
+        return bottle.template('index', result='There was an error trying to send an email to ' + data.get('email') +
+          '. Please wait a few minutes before trying to register again.')        
       else:
         nuser = {
           '_id': data.get('email'),
