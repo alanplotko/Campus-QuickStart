@@ -12,13 +12,13 @@
     <title>{{ title }}</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="static/assets/css/landing-page.css" rel="stylesheet">
+    <link href="/static/assets/css/landing-page.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="static/assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -80,7 +80,7 @@
                             <li><a href="{{ facebook }}"><i class="fa fa-facebook"></i></a></li>
                             % end
                             % if defined('twitter'):
-                                <a href="https://twitter.com/{{ twitter }}" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                            <li><a href="https://twitter.com/{{ twitter }}"><i class="fa fa-twitter fa-fw"></i></a></li>
                             % end
                             % if defined('googleplus'):
                             <li><a href="{{ googleplus }}"><i class="fa fa-google-plus"></i></a></li>
@@ -173,10 +173,10 @@
     </footer>
 
     <!-- jQuery Version 1.11.0 -->
-    <script src="js/jquery-1.11.0.js"></script>
+    <script src="/static/assets/js/jquery-1.11.0.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
 
 </body>
 
