@@ -2,7 +2,6 @@ import os
 import zipfile
 import tarfile
 import sendgrid
-import _tkinter
 import tkinter
 
 
