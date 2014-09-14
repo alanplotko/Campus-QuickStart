@@ -35,7 +35,7 @@ def tar(src):
             absname = os.path.abspath(os.path.join(dirname, filename))
             arcname = absname[len(abs_src) + 1:]
             #print 'tarring %s as %s' % (os.path.join(dirname, filename),
-                                        arcname)
+            #                            arcname)
             tar.add(arcname)
     tar.close()
     return
