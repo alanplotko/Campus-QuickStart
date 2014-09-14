@@ -122,7 +122,7 @@ def manage(step):
     elif step_int == 3:
       return bottle.template('manage', user=dict(luser), step=step_int, title="Create a website!", 
         desc="Get your club and organization on the web for all to see!")
-    if step_int == 4 and step in ("4.1", "4.2"):
+    if step_int == 4 and step in ("4.1", "4.2", "4.3"):
       mongo_db.users.update({'_id': luser['_id']}, { '$set': {
        '_theme': str(step).split(".")[1]
       }})
