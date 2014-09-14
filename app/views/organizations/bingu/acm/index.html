@@ -170,11 +170,7 @@
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
-                                <div id="success">
-                                    % if defined('status'):
-                                    {{ status }}
-                                    % end
-                                </div>
+                                <div id="success"></div>
                                 <button type="submit" class="btn btn-xl">Send Message</button>
                             </div>
                         </div>
@@ -233,6 +229,21 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/static/assets/theme-1/js/agency.js"></script>
+
+    %if defined('status') and status >= 200 and status < 300:
+    <script>
+    $('#success').html("<div class='alert alert-success'>");
+    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+    .append("</button>");
+    $('#success > .alert-success')
+    .append("<strong>Your message has been sent! </strong>");
+    $('#success > .alert-success')
+    .append('</div>');
+
+    //clear all fields
+    $('#contactForm').trigger("reset");
+    </script>
+    % end
 
 </body>
 
