@@ -149,8 +149,16 @@ def manage(step):
     if(hosting_option == "1"):
       description = "  is now hosted with us!"
     elif(hosting_option == "2"):
-      description = " has been exported!"
-  
+      src = luser['_school-lower'] + luser['_o-name-lower']
+      zip(src)
+      description = " has been exported as zip!"
+    elif(hosting_option == "3"):
+      src = luser['_school-lower'] + luser['_o-name-lower']
+      tar(src)
+      description = " has been exported as tar.gz!"
+    else:
+      description = ""
+
   # Report
   report = 'Log:\n\n'
   school = luser['_school-lower']
@@ -270,3 +278,7 @@ def static_file(filename):
   return bottle.static_file(filename, root=os.path.join(PROJECT_DIR, 'static/assets'))
 
 bottle.run(server="waitress", host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+
+
+
+

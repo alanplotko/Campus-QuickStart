@@ -1,14 +1,18 @@
 import os
 import zipfile
 import tarfile
-import tarfile
 import sendgrid
+import Tkinter
+import tkFileDialog
+
+
 '''
 import facebook
 '''
-
-'''
-def zip(src, dst):
+def zip(src):
+    root = Tkinter.Tk()
+    root.withdraw()
+    dst = tkFileDialog.askopenfilename()
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
@@ -20,7 +24,10 @@ def zip(src, dst):
     zf.close()
     return
 
-def tar(src, dst):
+def tar(src):
+    root = Tkinter.Tk()
+    root.withdraw()
+    dst = tkFileDialog.askopenfilename()
     tar = tarfile.open("%s.tar.gz" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
@@ -32,7 +39,7 @@ def tar(src, dst):
             tar.add(arcname)
     tar.close()
     return
-'''
+
 def sendemail(email_to, full_name):
     sg = sendgrid.SendGridClient(os.environ.get('SENDGRID_USERNAME'), os.environ.get('SENDGRID_PASSWORD'))
     message = sendgrid.Mail()
@@ -55,7 +62,8 @@ def sendemail2(receiver_email, sender_email, receiver, sender, phone, message):
     message.set_from(sender + ' <' + sender_email + '>')
     status, msg = sg.send(message)
 
-    return status    
+    return status   
+     
 '''
 def postfacebook(pageid, posttext):
     graphu = facebook.GraphAPI(CAAHnCTQz3dgBACgduWVLApGmNZBPlaFRCBtZBasHnAOmpr7Kpy3NS9irYZAsBcxsEa7XNTZAfZANorxO5txoEgdOtT9mAs4bZAmlTMVU1vzFJY9ubNzP6D0T8pz3pPACIZCkTLgVQji7e8AVD5JmRSUhwP1NpxYuij89zXnWgApqSJsMKMCjwK2HxKJ3eULHPvFC3ayuQWEvM5kuzCREtXPMT0VhWldyUkZD)
