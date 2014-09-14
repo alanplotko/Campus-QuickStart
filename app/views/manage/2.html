@@ -9,7 +9,7 @@
 
         <div class="pure-control-group">
             <label for="facebook">Facebook Page</label>
-        	% if defined('facebook'):
+        	% if user['facebook'] != None and len(user['facebook']) > 0:
             	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off" value='{{ facebook }}'>
             % else:
             	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off">
@@ -18,7 +18,7 @@
 
         <div class="pure-control-group">
             <label for="twitter">Twitter Handle</label>
-        	% if defined('twitter'):
+        	% if user['twitter'] != None and len(user['twitter']) > 0:
             	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off" value='{{ twitter }}'>
             % else:
             	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off">
@@ -27,7 +27,7 @@
 
         <div class="pure-control-group">
             <label for="googleplus">Google+ Page</label>
-            % if defined('googleplus'):
+        	% if user['googleplus'] != None and len(user['googleplus']) > 0:
             	<input id="googleplus" name="googleplus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off" value='{{ googleplus }}'>
             % else:
             	<input id="googleplus" name="googleplus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off">
