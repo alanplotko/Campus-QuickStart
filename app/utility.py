@@ -3,10 +3,6 @@ import zipfile
 import tarfile
 import sendgrid
 
-
-'''
-import facebook
-'''
 def zip(src,dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
@@ -19,7 +15,7 @@ def zip(src,dst):
     zf.close()
     return
 
-def tar(src,dst):
+def tarsite(src,dst):
     tar = tarfile.open("%s.tar.gz" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
@@ -55,24 +51,5 @@ def sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, 
     status, msg = sg.send(message)
 
     return status   
-
-'''
-def postfacebook(pageid, posttext):
-    graphu = facebook.GraphAPI(CAAHnCTQz3dgBACgduWVLApGmNZBPlaFRCBtZBasHnAOmpr7Kpy3NS9irYZAsBcxsEa7XNTZAfZANorxO5txoEgdOtT9mAs4bZAmlTMVU1vzFJY9ubNzP6D0T8pz3pPACIZCkTLgVQji7e8AVD5JmRSUhwP1NpxYuij89zXnWgApqSJsMKMCjwK2HxKJ3eULHPvFC3ayuQWEvM5kuzCREtXPMT0VhWldyUkZD)
-    pagestuff = graphu.request('me/accounts')
-    page_access_token = pagestuff['data'][0]['access_token']
-    graph = facebook.GraphAPI(page_access_token)
-    graph.put_object(pageid, "feed", message=posttext)
-    return 
-'''
-'''
-User Token  
-CAAHnCTQz3dgBACgduWVLApGmNZBPlaFRCBtZBasHnAOmpr7Kpy3NS9irYZAsBcxsEa7XNTZAfZANorxO5txoEgdOtT9mAs4bZAmlTMVU1vzFJY9ubNzP6D0T8pz3pPACIZCkTLgVQji7e8AVD5JmRSUhwP1NpxYuij89zXnWgApqSJsMKMCjwK2HxKJ3eULHPvFC3ayuQWEvM5kuzCREtXPMT0VhWldyUkZD
-
-App Token   
-535501693246936|CXJIohDKqAIZPE9NTgUXFoOxBSw
-'''
-
-
 
 

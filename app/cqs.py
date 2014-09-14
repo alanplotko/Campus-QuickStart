@@ -203,7 +203,7 @@ def manage(step):
       description = " has been exported as .zip!"
     elif(hosting_option == "3"):
       src = luser['_school-lower'] + luser['_o-name-lower']
-      tar(src, "/exports/export")
+      tarsite(src, "/exports/export")
       download("export.tar.gz")
       description = " has been exported as .tar.gz!"
     else:
