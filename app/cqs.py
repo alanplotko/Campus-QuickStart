@@ -200,8 +200,8 @@ def manage(step):
   return bottle.template('manage',
       user=dict(luser),
       step=step_int,
-      title="Your website " + description + " You can view your website here:\n\n",
-      link = "http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization,
+      title="Your website " + description,
+      link = "You can view your website here:\n\n http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization,
       desc="You can return to your dashboard and restart the process to make changes.",
       report=report)
 
