@@ -33,6 +33,9 @@ def submit_form():
           '_school': data.get('school-name'),
           '_o-name-lower': (data.get('organization-name').replace(" ", "-")).lower(),
           '_school-lower': (data.get('school-name').replace(" ", "-")).lower(),
+          'facebook': None,
+          'twitter': None,
+          'googleplus': None,
           '_const': None,
           '_hosting': None,
           '_theme': None,
@@ -246,7 +249,10 @@ def manage_update(step):
     }})
   elif step_int == 2:
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
-      '_const': bottle.request.POST['constitution']
+      '_const': bottle.request.POST['constitution'],
+      'facebook': bottle.request.POST['facebook'],
+      'twitter': bottle.request.POST['twitter'],
+      'googleplus': bottle.request.POST['google-plus']
     }})
   return bottle.redirect(str(step_int + 1))
 
@@ -257,7 +263,8 @@ def show_site(school, organization):
       '_o-name-lower': organization
     })
     return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
-      description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
+      description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'],  
+      facebook=user['facebook'], twitter=user['twitter'], googleplus=user['googleplus'], 
       gravatar=makeGravatar(user['_id']), email=user['_id'], school=school, organization=organization)
 
 @bottle.route('/organizations/<school>/<organization>/sendcontactform', method="POST")
@@ -281,6 +288,7 @@ def sendcontactform(school, organization):
     status = utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, sender_message)
     return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
       description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
+      facebook=user['facebook'], twitter=user['twitter'], googleplus=user['googleplus'], 
       gravatar=makeGravatar(user['_id']), email=user['_id'], school=school, 
       organization=organization, status=status)
 

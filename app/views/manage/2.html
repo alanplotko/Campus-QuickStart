@@ -5,8 +5,37 @@
             <textarea id="constitution" name="constitution" placeholder="Constitution for {{ user['_o-name'] }}" required="true" maxlength="2000" rows="10" cols="58"></textarea>
         </div>
 
+        <legend>Social Media</legend>
+
+        <div class="pure-control-group">
+            <label for="facebook">Facebook Page</label>
+        	% if defined('facebook'):
+            	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off" value='{{ facebook }}'>
+            % else:
+            	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off">
+            % end
+        </div>
+
+        <div class="pure-control-group">
+            <label for="twitter">Twitter Handle</label>
+        	% if defined('twitter'):
+            	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off" value='{{ twitter }}'>
+            % else:
+            	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off">
+            % end
+        </div>
+
+        <div class="pure-control-group">
+            <label for="googlePlus">Google+ Page</label>
+            % if defined('googleplus'):
+            	<input id="googlePlus" name="googlePlus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off" value='{{ googleplus }}'>
+            % else:
+            	<input id="googlePlus" name="googlePlus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off">
+            % end
+        </div>
+
         <div class="pure-controls">
-            <button type="submit" class="pure-button pure-button-active">Update Constitution</button>
+            <button type="submit" class="pure-button pure-button-active">Update Constitution and Social Media</button>
         </div>
     </fieldset>
 </form>

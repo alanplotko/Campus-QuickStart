@@ -188,14 +188,14 @@
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">
-                        % if defined('twitter'):
-                            <li><a href="{{ twitter }}"><i class="fa fa-twitter"></i></a></li>
-                        % end
                         % if defined('facebook'):
                         <li><a href="{{ facebook }}"><i class="fa fa-facebook"></i></a></li>
                         % end
-                        % if defined('linkedin'):
-                        <li><a href="{{ linkedin }}"><i class="fa fa-linkedin"></i></a></li>
+                        % if defined('twitter'):
+                            <li><a href="https://twitter.com/{{ twitter }}"><i class="fa fa-twitter"></i></a></li>
+                        % end
+                        % if defined('google-plus'):
+                        <li><a href="{{ googleplus }}"><i class="fa fa-google-plus"></i></a></li>
                         % end
                     </ul>
                 </div>
