@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="{{ description }}">
+    <meta name="author" content="{{ full_name }}">
 
-    <title>{{ title }} - A student group at Binghamton University</title>
+    <title>{{ title }} - A student group at {{ school }}</title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="/static/assets/theme-2/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
     <link href="/static/assets/theme-2/css/freelancer.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/static/assets/theme-2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/theme-2/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -54,13 +54,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#portfolio">Portfolio</a>
-                    </li>
-                    <li class="page-scroll">
                         <a href="#about">About</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#contact">Contact</a>
+                        <a href="#constitution">Constitution</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="#contact">Contact Us</a>
                     </li>
                 </ul>
             </div>
@@ -74,11 +74,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <img class="img-responsive" src="img/profile.png" alt="">
                     <div class="intro-text">
                         <span class="name">{{ title }}</span>
                         <hr class="star-light">
-                        <span class="skills">Our Little Student Organization </span>
+                        <span class="skills">Our Little Student Organization</span>
                     </div>
                 </div>
             </div>
@@ -90,13 +89,30 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>About</h2>
+                    <h2>About {{ title }}</h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>{{ description}}</p>
+                <div class="col-lg-8 col-lg-offset-2">
+                    <p>{{ description }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Constitution Section -->
+    <section class="success" id="constitution">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Our Constitution</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <p>{{ constitution }}</p>
                 </div>
             </div>
         </div>
@@ -107,15 +123,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>Contact Me</h2>
+                    <h2>Contact Us</h2>
                     <hr class="star-primary">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-                    <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm" novalidate action="/organizations/{{ school }}/{{ organization }}/sendcontactform" method="post">
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Name</label>
@@ -174,13 +188,13 @@
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">
                         % if defined('facebook'):
-                        <li><a href="{{ facebook }}"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="{{ facebook }}"><i class="fa fa-facebook fa-5x"></i></a></li>
                         % end
                         % if defined('twitter'):
-                            <li><a href="https://twitter.com/{{ twitter }}"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://twitter.com/{{ twitter }}"><i class="fa fa-twitter fa-5x"></i></a></li>
                         % end
                         % if defined('googleplus'):
-                        <li><a href="{{ googleplus }}"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="{{ googleplus }}"><i class="fa fa-google-plus fa-5x"></i></a></li>
                         % end
                     </ul>
                 </div>
