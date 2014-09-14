@@ -70,10 +70,14 @@
         <div class="container">
             <div class="row centered">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h4>STEP {{ step }}: {{ title }} 
-                    % if defined('link'):
-                        <br /><br /> <a href="{{ link }}" style="color: #fff; text-decoration: underline;">{{ link }}</a>
-                    % end
+                    <h4>
+                        % if defined('step') and step != 6:
+                        STEP {{ step }}:
+                        % end
+                        {{ title }} 
+                        % if defined('link') and int(user['_hosting']) == 1:
+                            <br /><br /> <a href="{{ link }}" style="color: #fff; text-decoration: underline;">{{ link }}</a>
+                        % end
                     </h4>
                     <p>{{ desc }}</p>
                 </div>

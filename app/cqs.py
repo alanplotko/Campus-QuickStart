@@ -148,6 +148,46 @@ def manage(step):
     }})
     if(hosting_option == "1"):
       description = "  is now hosted with us!"
+
+      # Report
+      report = ''
+      school = luser['_school-lower']
+      organization = luser['_o-name-lower']
+
+      # Create folder for university if it does not exist
+      if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school):
+        os.makedirs(PROJECT_DIR + '/views/organizations/' + school)
+      # Create folder for club or organization if it does not exist
+      if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school + '/' + organization):
+        os.makedirs(PROJECT_DIR + '/views/organizations/' + school + '/' + organization)
+      
+      sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(luser['_theme'])
+      destPath = r'' + PROJECT_DIR + '/views/organizations/' + school + '/' + organization
+      for root, dirs, files in os.walk(sourcePath):
+        #figure out where we're going
+        dest = destPath + root.replace(sourcePath, '')
+        
+        #if we're in a directory that doesn't exist in the destination folder
+        #then create a new folder
+        if not os.path.isdir(dest):
+            os.mkdir(dest)
+            report += ('- Directory created at: ' + dest + '\n')
+
+        #loop through all files in the directory
+        for f in files:
+            #compute current (old) & new file locations
+            oldLoc = root + '\\' + f
+            newLoc = dest + '\\' + f
+
+            if not os.path.isfile(newLoc):
+                try:
+                    shutil.copy2(oldLoc, newLoc)
+                    report += ('- File ' + f + ' copied.\n')
+                except IOError:
+                    report += ('- File "' + f + '" already exists\n')
+      return bottle.template('manage', user=dict(luser), step=step_int, title="Your website " + description, 
+        link="http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization, 
+        desc="You can return to your dashboard and restart the process to make changes.", report=report)
     elif(hosting_option == "2"):
       src = luser['_school-lower'] + luser['_o-name-lower']
       zip(src, "/export")
@@ -159,51 +199,9 @@ def manage(step):
       download("export.tar.gz")
       description = " has been exported as .tar.gz!"
     else:
-      description = ""
-
-  # Report
-  report = ''
-  school = luser['_school-lower']
-  organization = luser['_o-name-lower']
-
-  # Create folder for university if it does not exist
-  if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school):
-    os.makedirs(PROJECT_DIR + '/views/organizations/' + school)
-  # Create folder for club or organization if it does not exist
-  if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school + '/' + organization):
-    os.makedirs(PROJECT_DIR + '/views/organizations/' + school + '/' + organization)
-  
-  sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(luser['_theme'])
-  destPath = r'' + PROJECT_DIR + '/views/organizations/' + school + '/' + organization
-  for root, dirs, files in os.walk(sourcePath):
-    #figure out where we're going
-    dest = destPath + root.replace(sourcePath, '')
-    
-    #if we're in a directory that doesn't exist in the destination folder
-    #then create a new folder
-    if not os.path.isdir(dest):
-        os.mkdir(dest)
-        report += ('- Directory created at: ' + dest + '\n')
-
-    #loop through all files in the directory
-    for f in files:
-        #compute current (old) & new file locations
-        oldLoc = root + '\\' + f
-        newLoc = dest + '\\' + f
-
-        if not os.path.isfile(newLoc):
-            try:
-                shutil.copy2(oldLoc, newLoc)
-                report += ('- File ' + f + ' copied.\n')
-            except IOError:
-                report += ('- File "' + f + '" already exists\n')
-  return bottle.template('manage',
-      user=dict(luser),
-      step=step_int,
-      title="Your website " + description,
-      link = "You can view your website here:\n\n http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization,
-      desc="You can return to your dashboard and restart the process to make changes.",
-      report=report)
+      description = "" 
+    return bottle.template('manage', user=dict(luser), step=step_int, title="Your website " + description, 
+      desc="You can return to your dashboard and restart the process to make changes.")
 
 def download(filename):
     return static_file(filename)
@@ -223,6 +221,18 @@ def sendContactForm():
   if 'message' in bottle.request.POST:
     message = bottle.request.POST['message']
   utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
+
+@bottle.route('/manage')
+def manage_overall():
+  session = get_session()
+  if not session: bottle.redirect('/login')
+  luser = user_find(session['uid'])
+  if not luser: bottle.redirect('/logout')
+  if luser['_theme'] == None or luser['_hosting'] == None:
+    bottle.redirect('/manage/step/1')
+  elif luser['_theme'] != None and luser['_hosting'] != None:
+    return bottle.template('manage', user=dict(luser), title="Welcome back!", 
+      desc="You've already completed your first time setup. What would you like to manage today?", step=6)
 
 @bottle.route('/manage/step/<step>', method="POST")
 def manage_update(step):
