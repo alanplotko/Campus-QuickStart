@@ -44,13 +44,13 @@ def sendemail(email_to, full_name):
 
     return status
 
-def sendemail2(receiver_email, sender_email, receiver, sender, phone, message):
+def sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, sender_message):
     sg = sendgrid.SendGridClient(os.environ.get('SENDGRID_USERNAME'), os.environ.get('SENDGRID_PASSWORD'))
     message = sendgrid.Mail()
     message.add_to(receiver + " <" + receiver_email + ">")
     message.set_subject("Contact Form Submission from " + sender)
-    message.set_html(sender + " has contacted you via Campus QuickStart with the following message and can be reached by replying to this email or at " + phone + ".<br /><br />Message:<br />" + message)
-    message.set_text(sender + " has contacted you via Campus QuickStart with the following message and can be reached by replying to this email or at " + phone + ". Message:" + message)
+    message.set_html(sender + " has contacted you via Campus QuickStart with the following message and can be reached by replying to this email or at " + phone + ".<br /><br />Message:<br />" + sender_message)
+    message.set_text(sender + " has contacted you via Campus QuickStart with the following message and can be reached by replying to this email or at " + phone + ". Message:" + sender_message)
     message.set_from(sender + ' <' + sender_email + '>')
     status, msg = sg.send(message)
 

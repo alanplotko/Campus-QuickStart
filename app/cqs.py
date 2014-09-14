@@ -119,12 +119,15 @@ def manage(step):
     elif step_int == 3:
       return bottle.template('manage', user=dict(luser), step=step_int, title="Create a website!", 
         desc="Get your club and organization on the web for all to see!")
-    if step == "4.1" or step == "4.2":
+    if step_int == 4 and step in ("4.1", "4.2"):
+      mongo_db.users.update({'_id': luser['_id']}, { '$set': {
+       '_theme': str(step).split(".")[1]
+      }})
       bottle.redirect("/manage")
-    if step_int == 4:
+    if step_int == 4 and step not in ("4.1", "4.2"):
       return bottle.template('manage', user=dict(luser), step=step_int, title="How do you want to host your website?",
        desc="Host it with us or export it to host somewhere else. GitHub Pages support coming soon!")
-
+      
   if step_int == 1:
     return bottle.template('manage',
       user=dict(luser),
@@ -218,22 +221,6 @@ def manage(step):
 def download(filename):
     return static_file(filename)
 
-@bottle.route('/sendcontactform')
-def sendContactForm():
-  if 'sender' in bottle.request.POST:
-    sender = bottle.request.POST['sender']
-  if 'sender_email' in bottle.request.POST:
-    sender_email = bottle.request.POST['sender_email']
-  if 'receiver' in bottle.request.POST:
-    receiver = bottle.request.POST['receiver']
-  if 'receiver_email' in bottle.request.POST:
-    receiver_email = bottle.request.POST['receiver_email']
-  if 'phone' in bottle.request.POST:
-    phone = bottle.request.POST['phone']
-  if 'message' in bottle.request.POST:
-    message = bottle.request.POST['message']
-  utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, message)
-
 @bottle.route('/manage')
 def manage_overall():
   session = get_session()
@@ -248,14 +235,18 @@ def manage_overall():
 
 @bottle.route('/manage/step/<step>', method="POST")
 def manage_update(step):
-  step = int(step)
+  step_int = int(step)
   session = get_session()
   if not session: bottle.redirect('/login')
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
-  if luser['_theme'] != None and luser['_hosting'] != None and step != 1:
+  if luser['_theme'] != None and luser['_hosting'] != None and step_int != 1:
+    if step_int == 2:    
+      mongo_db.users.update({'_id': luser['_id']}, { '$set': {
+        '_const': bottle.request.POST['constitution']
+      }})
     bottle.redirect('/manage')
-  if step == 1:
+  if step_int == 1:
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
       '_o-name': bottle.request.POST['organization-name'],
       '_school': bottle.request.POST['school-name'],
@@ -263,21 +254,45 @@ def manage_update(step):
       '_o-name-lower': (bottle.request.POST['organization-name'].replace(" ", "-")).lower(),
       '_school-lower': (bottle.request.POST['school-name'].replace(" ", "-")).lower(),
     }})
-  elif step == 2:
+  elif step_int == 2:
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
       '_const': bottle.request.POST['constitution']
     }})
-  return bottle.redirect(str(step + 1))
-
+  return bottle.redirect(str(step_int + 1))
 
 @bottle.route('/organizations/<school>/<organization>')
 def show_site(school, organization):
-    luser = mongo_db.users.find_one({
+    user = mongo_db.users.find_one({
       '_school-lower': school.replace("-", " "),
       '_o-name-lower': organization.replace("-", " ")
     })
-    user = luser[0]
-    return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], gravatar=makeGravatar(user['_id']), email=user['_id'])
+    return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
+      description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
+      gravatar=makeGravatar(user['_id']), email=user['_id'], school=school.replace("-", " "), organization=organization.replace("-", " "))
+
+@bottle.route('/organizations/<school>/<organization>/sendcontactform', method="POST")
+def sendcontactform(school, organization):
+    user = mongo_db.users.find_one({
+      '_school-lower': school.replace("-", " "),
+      '_o-name-lower': organization.replace("-", " ")
+    })
+    if 'sender' in bottle.request.POST:
+      sender = bottle.request.POST['sender']
+    if 'sender_email' in bottle.request.POST:
+      sender_email = bottle.request.POST['sender_email']
+    if 'receiver' in bottle.request.POST:
+      receiver = bottle.request.POST['receiver']
+    if 'receiver_email' in bottle.request.POST:
+      receiver_email = bottle.request.POST['receiver_email']
+    if 'phone' in bottle.request.POST:
+      phone = bottle.request.POST['phone']
+    if 'sender_message' in bottle.request.POST:
+      sender_message = bottle.request.POST['sender_message']
+    status = utility.sendemailcontactform(receiver_email, sender_email, receiver, sender, phone, sender_message)
+    return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
+      description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
+      gravatar=makeGravatar(user['_id']), email=user['_id'], school=school.replace("-", " "), 
+      organization=organization.replace("-", " "), status=status)
 
 def makeGravatar(email):
   return "http://www.gravatar.com/avatar/" + hashlib.md5(email.encode('utf-8')).hexdigest() + "?s=150"
