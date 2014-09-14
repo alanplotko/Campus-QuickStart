@@ -152,7 +152,7 @@ def manage(step):
       description = " has been exported!"
   
   # Report
-  report = 'Log:\n\n'
+  report = ''
   school = luser['_school-lower']
   organization = luser['_o-name-lower']
 
@@ -191,7 +191,7 @@ def manage(step):
   return bottle.template('manage',
       user=dict(luser),
       step=step_int,
-      title="Your website " + description + " You can view your website here: ",
+      title="Your website " + description + " You can view your website here:\n\n",
       link = "http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization,
       desc="You can return to your dashboard and restart the process to make changes.",
       report=report)
