@@ -504,7 +504,9 @@ a:after {
     margin: 50px;
 }
 
-#clubOrg_list li, #webChoices_list li {
+#clubOrg_list li,
+#webChoices_list li,
+#themeChoices_list li {
     font-size: 24px;
     color: #fff;
     font-weight: bold;
@@ -521,6 +523,19 @@ a:after {
     height: 200px;
     margin-right: 50px;
     color: #000;
+}
+
+#themeChoices_list li {
+    border: 2px dotted #000;
+    width: 350px;
+    height: 220px;
+    margin: 10px;
+    color: #000;
+    text-decoration: underline;
+}
+
+#themeChoices_list li img {
+    margin-top: 10px;
 }
 
 #webChoices_list li i {
