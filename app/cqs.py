@@ -268,7 +268,7 @@ def show_site(school, organization):
     })
     return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
       description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
-      gravatar=makeGravatar(user['_id']), email=user['_id'], school=school.replace("-", " "), organization=organization.replace("-", " "))
+      gravatar=makeGravatar(user['_id']), email=user['_id'], school=school, organization=organization)
 
 @bottle.route('/organizations/<school>/<organization>/sendcontactform', method="POST")
 def sendcontactform(school, organization):
