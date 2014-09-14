@@ -273,8 +273,8 @@ def show_site(school, organization):
 @bottle.route('/organizations/<school>/<organization>/sendcontactform', method="POST")
 def sendcontactform(school, organization):
     user = mongo_db.users.find_one({
-      '_school-lower': school.replace("-", " "),
-      '_o-name-lower': organization.replace("-", " ")
+      '_school-lower': school
+      '_o-name-lower': organization
     })
     if 'sender' in bottle.request.POST:
       sender = bottle.request.POST['sender']
