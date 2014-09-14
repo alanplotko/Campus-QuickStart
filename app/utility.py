@@ -19,7 +19,7 @@ def zip(src):
         for filename in files:
             absname = os.path.abspath(os.path.join(dirname, filename))
             arcname = absname[len(abs_src) + 1:]
-            print 'zipping %s as %s' % (os.path.join(dirname, filename), arcname)
+            #print 'zipping %s as %s' % (os.path.join(dirname, filename), arcname)
             zf.write(absname, arcname)
     zf.close()
     return
@@ -34,7 +34,7 @@ def tar(src):
         for filename in files:
             absname = os.path.abspath(os.path.join(dirname, filename))
             arcname = absname[len(abs_src) + 1:]
-            print 'tarring %s as %s' % (os.path.join(dirname, filename),
+            #print 'tarring %s as %s' % (os.path.join(dirname, filename),
                                         arcname)
             tar.add(arcname)
     tar.close()
@@ -63,7 +63,7 @@ def sendemail2(receiver_email, sender_email, receiver, sender, phone, message):
     status, msg = sg.send(message)
 
     return status   
-     
+
 '''
 def postfacebook(pageid, posttext):
     graphu = facebook.GraphAPI(CAAHnCTQz3dgBACgduWVLApGmNZBPlaFRCBtZBasHnAOmpr7Kpy3NS9irYZAsBcxsEa7XNTZAfZANorxO5txoEgdOtT9mAs4bZAmlTMVU1vzFJY9ubNzP6D0T8pz3pPACIZCkTLgVQji7e8AVD5JmRSUhwP1NpxYuij89zXnWgApqSJsMKMCjwK2HxKJ3eULHPvFC3ayuQWEvM5kuzCREtXPMT0VhWldyUkZD)
