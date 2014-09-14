@@ -7,7 +7,7 @@ import sendgrid
 '''
 import facebook
 '''
-def zip(src,dst):
+def zipsite(src,dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
@@ -19,7 +19,7 @@ def zip(src,dst):
     zf.close()
     return
 
-def tar(src,dst):
+def tarsite(src,dst):
     tar = tarfile.open("%s.tar.gz" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
