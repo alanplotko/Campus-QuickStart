@@ -252,7 +252,7 @@ def manage_update(step):
       '_const': bottle.request.POST['constitution'],
       'facebook': bottle.request.POST['facebook'],
       'twitter': bottle.request.POST['twitter'],
-      'googleplus': bottle.request.POST['google-plus']
+      'googleplus': bottle.request.POST['googleplus']
     }})
   return bottle.redirect(str(step_int + 1))
 
