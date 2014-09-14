@@ -242,6 +242,10 @@
 
     //clear all fields
     $('#contactForm').trigger("reset");
+
+    $('html,body').animate({
+        scrollTop: $('#contactForm').offset().top + 75
+    }, 1000);   
     </script>
     % end
 
