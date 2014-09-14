@@ -186,10 +186,10 @@ def manage(step):
         report += '- Copied index.html over to directory.'
       # eg. src and dest are the same file
       except shutil.Error as e:
-          print('Error: %s' % e)
+          report += ('Error: %s' % e)
       # eg. source or destination doesn't exist
       except IOError as e:
-          print('Error: %s' % e.strerror)
+          report += ('Error: %s' % e.strerror)
       return bottle.template('manage', user=dict(luser), step=step_int, title="Your website " + description, 
         link="http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization, 
         desc="You can return to your dashboard and restart the process to make changes.", report=report)
