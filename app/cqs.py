@@ -183,7 +183,7 @@ def manage(step):
     #then create a new folder
     if not os.path.isdir(dest):
         os.mkdir(dest)
-        report += ('Directory created at: ' + dest + '\n')
+        report += ('- Directory created at: ' + dest + '\n')
 
     #loop through all files in the directory
     for f in files:
@@ -194,9 +194,9 @@ def manage(step):
         if not os.path.isfile(newLoc):
             try:
                 shutil.copy2(oldLoc, newLoc)
-                report += ('File ' + f + ' copied.')
+                report += ('- File ' + f + ' copied.\n')
             except IOError:
-                report += ('file "' + f + '" already exists')
+                report += ('- File "' + f + '" already exists\n')
   return bottle.template('manage',
       user=dict(luser),
       step=step_int,
