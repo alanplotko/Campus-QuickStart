@@ -236,7 +236,10 @@ def manage_update(step):
   if luser['_theme'] != None and luser['_hosting'] != None and step_int != 1:
     if step_int == 2:    
       mongo_db.users.update({'_id': luser['_id']}, { '$set': {
-        '_const': bottle.request.POST['constitution']
+        '_const': bottle.request.POST['constitution'],
+        'facebook': bottle.request.POST['facebook'],
+        'twitter': bottle.request.POST['twitter'],
+        'googleplus': bottle.request.POST['googleplus']
       }})
     bottle.redirect('/manage')
   if step_int == 1:
