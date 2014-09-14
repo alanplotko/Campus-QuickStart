@@ -206,7 +206,7 @@ def manage(step):
       report=report)
 
 def download(filename):
-    return static_file(filename, root='./exports', download=filename)
+    return static_file(filename, root="/exports/")
 
 @bottle.route('/sendcontactform')
 def sendContactForm():
