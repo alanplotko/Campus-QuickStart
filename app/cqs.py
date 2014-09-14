@@ -195,7 +195,7 @@ def manage(step):
         desc="You can return to your dashboard and restart the process to make changes.", report=report)
     elif(hosting_option == "2"):
       src = luser['_school-lower'] + luser['_o-name-lower']
-      zipsite(src, "/export")
+      zip(src, "/export")
       download("export.zip")
       description = " has been exported as .zip!"
     elif(hosting_option == "3"):

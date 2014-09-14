@@ -3,7 +3,7 @@ import zipfile
 import tarfile
 import sendgrid
 
-def zipsite(src,dst):
+def zip(src,dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
