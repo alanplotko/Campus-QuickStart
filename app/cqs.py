@@ -150,11 +150,13 @@ def manage(step):
       description = "  is now hosted with us!"
     elif(hosting_option == "2"):
       src = luser['_school-lower'] + luser['_o-name-lower']
-      zip(src)
+      zip(src, "/export")
+      download("export.zip")
       description = " has been exported as zip!"
     elif(hosting_option == "3"):
       src = luser['_school-lower'] + luser['_o-name-lower']
-      tar(src)
+      tar(src, "/export")
+      download("export.tar.gz")
       description = " has been exported as tar.gz!"
     else:
       description = ""
@@ -185,7 +187,6 @@ def manage(step):
 
     #loop through all files in the directory
     for f in files:
-
         #compute current (old) & new file locations
         oldLoc = root + '\\' + f
         newLoc = dest + '\\' + f
@@ -203,6 +204,9 @@ def manage(step):
       link = "http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization,
       desc="You can return to your dashboard and restart the process to make changes.",
       report=report)
+
+def download(filename):
+    return static_file(filename, root='/', download=filename)
 
 @bottle.route('/sendcontactform')
 def sendContactForm():

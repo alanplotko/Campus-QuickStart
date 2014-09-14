@@ -2,16 +2,12 @@ import os
 import zipfile
 import tarfile
 import sendgrid
-import tkinter
 
 
 '''
 import facebook
 '''
-def zip(src):
-    root = Tkinter.Tk()
-    root.withdraw()
-    dst = tkFileDialog.askopenfilename()
+def zip(src,dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
@@ -23,10 +19,7 @@ def zip(src):
     zf.close()
     return
 
-def tar(src):
-    root = Tkinter.Tk()
-    root.withdraw()
-    dst = tkFileDialog.askopenfilename()
+def tar(src,dst):
     tar = tarfile.open("%s.tar.gz" % (dst), "w")
     abs_src = os.path.abspath(src)
     for dirname, subdirs, files in os.walk(src):
