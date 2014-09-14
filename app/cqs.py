@@ -155,7 +155,7 @@ def manage(step):
       description = " has been exported as zip!"
     elif(hosting_option == "3"):
       src = luser['_school-lower'] + luser['_o-name-lower']
-      tar(src, "/export")
+      tar(src, "/exports/export")
       download("export.tar.gz")
       description = " has been exported as tar.gz!"
     else:
@@ -206,7 +206,7 @@ def manage(step):
       report=report)
 
 def download(filename):
-    return static_file(filename, root='/', download=filename)
+    return static_file(filename, root='/exports', download=filename)
 
 @bottle.route('/sendcontactform')
 def sendContactForm():
