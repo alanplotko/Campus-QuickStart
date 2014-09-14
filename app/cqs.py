@@ -140,6 +140,7 @@ def manage(step):
   elif step_int == 2:
     return bottle.template('manage',
       user=dict(luser),
+      constitution=luser['_const'].replace("\r\n", "**SKIP**"),
       step=step_int,
       title="Draft a constitution!",
       desc="Every club or organization has a basic set of goals. Can you clarify yours?")
