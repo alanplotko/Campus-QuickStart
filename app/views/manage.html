@@ -75,7 +75,7 @@
                         STEP {{ step }}:
                         % end
                         {{ title }} 
-                        % if defined('link') and user['_hosting'] != None and int(user['_hosting']) == 1:
+                        % if defined('link') and user['_hosting'] != None:
                             <br /><br /> <a href="{{ link }}" style="color: #fff; text-decoration: underline;">{{ link }}</a>
                         % end
                     </h4>
