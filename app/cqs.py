@@ -263,7 +263,7 @@ def show_site(school, organization):
       '_o-name-lower': organization
     })
     return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
-      description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'],  
+      description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
       facebook=user['facebook'], twitter=user['twitter'], googleplus=user['googleplus'], 
       gravatar=makeGravatar(user['_id']), email=user['_id'], school=school, organization=organization)
 
