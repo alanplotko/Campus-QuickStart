@@ -3,10 +3,6 @@ import zipfile
 import tarfile
 import sendgrid
 
-
-'''
-import facebook
-'''
 def zipsite(src,dst):
     zf = zipfile.ZipFile("%s.zip" % (dst), "w")
     abs_src = os.path.abspath(src)
