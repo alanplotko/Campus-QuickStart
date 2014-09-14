@@ -176,30 +176,17 @@ def manage(step):
       if not os.path.exists(PROJECT_DIR + '/views/organizations/' + school + '/' + organization):
         os.makedirs(PROJECT_DIR + '/views/organizations/' + school + '/' + organization)
       
-      sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(luser['_theme'])
+      sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(luser['_theme']) + '/index.html'
       destPath = r'' + PROJECT_DIR + '/views/organizations/' + school + '/' + organization
-      for root, dirs, files in os.walk(sourcePath):
-        #figure out where we're going
-        dest = destPath + root.replace(sourcePath, '')
-        
-        #if we're in a directory that doesn't exist in the destination folder
-        #then create a new folder
-        if not os.path.isdir(dest):
-            os.mkdir(dest)
-            report += ('- Directory created at: ' + dest + '\n')
-
-        #loop through all files in the directory
-        for f in files:
-            #compute current (old) & new file locations
-            oldLoc = root + '\\' + f
-            newLoc = dest + '\\' + f
-
-            if not os.path.isfile(newLoc):
-                try:
-                    shutil.copy2(oldLoc, newLoc)
-                    report += ('- File ' + f + ' copied.\n')
-                except IOError:
-                    report += ('- File ' + f + ' already exists\n')
+      
+      try:
+        shutil.copy(sourcePath, destPath)
+      # eg. src and dest are the same file
+      except shutil.Error as e:
+          print('Error: %s' % e)
+      # eg. source or destination doesn't exist
+      except IOError as e:
+          print('Error: %s' % e.strerror)
       return bottle.template('manage', user=dict(luser), step=step_int, title="Your website " + description, 
         link="http://campusqs14.herokuapp.com/organizations/" + school + "/" + organization, 
         desc="You can return to your dashboard and restart the process to make changes.", report=report)
