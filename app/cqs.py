@@ -179,8 +179,11 @@ def manage(step):
       sourcePath = r'' + PROJECT_DIR + '/views/themes_repo/theme-' + str(luser['_theme']) + '/index.html'
       destPath = r'' + PROJECT_DIR + '/views/organizations/' + school + '/' + organization
       
+      report = ''
+
       try:
         shutil.copy(sourcePath, destPath)
+        report += '- Copied index.html over to directory.'
       # eg. src and dest are the same file
       except shutil.Error as e:
           print('Error: %s' % e)
