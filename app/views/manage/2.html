@@ -10,7 +10,7 @@
         <div class="pure-control-group">
             <label for="facebook">Facebook Page</label>
         	% if user['facebook'] != None and len(user['facebook']) > 0:
-            	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off" value='{{ facebook }}'>
+            	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off" value='{{ user["facebook"] }}'>
             % else:
             	<input id="facebook" name="facebook" type="text" placeholder="Facebook Page URL" maxlength="250" autocomplete="off">
             % end
@@ -19,7 +19,7 @@
         <div class="pure-control-group">
             <label for="twitter">Twitter Handle</label>
         	% if user['twitter'] != None and len(user['twitter']) > 0:
-            	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off" value='{{ twitter }}'>
+            	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off" value='{{ user["twitter"] }}'>
             % else:
             	<input id="twitter" name="twitter" type="text" placeholder="Twitter Handle" maxlength="250" autocomplete="off">
             % end
@@ -28,7 +28,7 @@
         <div class="pure-control-group">
             <label for="googleplus">Google+ Page</label>
         	% if user['googleplus'] != None and len(user['googleplus']) > 0:
-            	<input id="googleplus" name="googleplus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off" value='{{ googleplus }}'>
+            	<input id="googleplus" name="googleplus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off" value='{{ user["googleplus"] }}'>
             % else:
             	<input id="googleplus" name="googleplus" type="text" placeholder="Google+ Page URL" maxlength="250" autocomplete="off">
             % end
