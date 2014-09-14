@@ -113,6 +113,18 @@ def manage(step):
   if not session: bottle.redirect('/login')
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
+  if luser['_theme'] != None and luser['_hosting'] != None:
+    if step_int in (1, 2):
+      pass
+    elif step_int == 3:
+      return bottle.template('manage', user=dict(luser), step=step_int, title="Create a website!", 
+        desc="Get your club and organization on the web for all to see!")
+    if step == "4.1" or step == "4.2":
+      bottle.redirect("/manage")
+    if step_int == 4:
+      return bottle.template('manage', user=dict(luser), step=step_int, title="How do you want to host your website?",
+       desc="Host it with us or export it to host somewhere else. GitHub Pages support coming soon!")
+
   if step_int == 1:
     return bottle.template('manage',
       user=dict(luser),
@@ -241,6 +253,8 @@ def manage_update(step):
   if not session: bottle.redirect('/login')
   luser = user_find(session['uid'])
   if not luser: bottle.redirect('/logout')
+  if luser['_theme'] != None and luser['_hosting'] != None and step != 1:
+    bottle.redirect('/manage')
   if step == 1:
     mongo_db.users.update({'_id': luser['_id']}, { '$set': {
       '_o-name': bottle.request.POST['organization-name'],
