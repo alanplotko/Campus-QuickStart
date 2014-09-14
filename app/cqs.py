@@ -263,8 +263,8 @@ def manage_update(step):
 @bottle.route('/organizations/<school>/<organization>')
 def show_site(school, organization):
     user = mongo_db.users.find_one({
-      '_school-lower': school.replace("-", " "),
-      '_o-name-lower': organization.replace("-", " ")
+      '_school-lower': school
+      '_o-name-lower': organization
     })
     return bottle.template('organizations/' + school + '/' + organization + '/index', title=user['_o-name'], 
       description=user['_desc'], full_name=user['_fullname'], constitution=user['_const'], 
