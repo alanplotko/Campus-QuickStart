@@ -127,7 +127,7 @@ def manage(step):
        '_theme': str(step).split(".")[1]
       }})
       bottle.redirect("/manage")
-    if step_int == 4 and step not in ("4.1", "4.2"):
+    if step_int == 4 and step not in ("4.1", "4.2", "4.3"):
       return bottle.template('manage', user=dict(luser), step=step_int, title="How do you want to host your website?",
        desc="Host it with us or export it to host somewhere else. GitHub Pages support coming soon!")
       
