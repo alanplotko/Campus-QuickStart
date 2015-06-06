@@ -30,5 +30,5 @@ CQS starts off by asking for some details about your organization to create your
 
 ## Project Authors
 
-- Gabriel Ochoa ([@gochoa](https://github.com/gochoa))
+- Gabriel Ochoa ([@gabeochoa](https://github.com/gabeochoa))
 - Alan Plotko ([@alanplotko](https://github.com/alanplotko))
