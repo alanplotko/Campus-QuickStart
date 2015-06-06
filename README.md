@@ -16,7 +16,7 @@ With CQS, everyone regardless of experience in web development can get a website
 
 CQS starts off by asking for some details about your organization to create your account. MongoDB keeps track of users and the groups they're involved in and SendGrid ensures email communications between the board and members. CQS provides some starting templates for the website and plugs in the information it receives from you. Templates of all kinds can be potentially modified to fit the information that you provide about your organization. Each group managed with CQS can have its own website hosted by CQS. If you have any technical experience, you're free to export the files for self-hosting on your own server or in the future, via GitHub pages. Another future implementation would be using the NameCheap API to allow for domain purchases and management via CQS for your CQS-hosted websites. The original URL off CQS will always be available in additional to a secondary domain purchased off a third party.
 
-### Viewing CQS
+### CQS on ChallengePost and Heroku
 
 You can view the project at the following links: [ChallengePost](http://challengepost.com/software/campus-quickstart-czxhp) and [Heroku](http://campusqs14.herokuapp.com/).
 
