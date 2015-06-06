@@ -2,7 +2,11 @@
 
 Campus QuickStart (CQS) is a web application built at PennApps X, a hackathon hosted at the University of Pennsylvania. CQS aims to establish a new organization's online presence, so that its staff can focus on building the rest. It was created with Python 3 and uses Bottle and MongoDB. You can view the project on ChallengePost [here](http://challengepost.com/software/campus-quickstart-czxhp)
 
-![Campus QuickStart Front Page](https://s3.amazonaws.com/fvd-data/notes/166489/1433610081-pbBcW4/screen.png)
+## Screenshots
+
+### CQS Front Page
+
+![CQS Front Page](https://s3.amazonaws.com/fvd-data/notes/166489/1433610081-pbBcW4/screen.png)
 
 ## Inspiration for CQS
 
