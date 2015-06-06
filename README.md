@@ -23,3 +23,8 @@ CQS starts off by asking for some details about your organization to create your
   - Simplify starting experience
 - Add GitHub option
 - Add download option (i.e. .zip, .tar.gz, .rar)
+
+## Project Authors
+
+- Gabriel Ochoa ([@gochoa](https://github.com/gochoa))
+- Alan Plotko ([@alanplotko](https://github.com/alanplotko))
